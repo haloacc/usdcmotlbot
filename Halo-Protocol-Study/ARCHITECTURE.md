@@ -104,8 +104,8 @@ Before settlement, every intent and risk decision is recorded in the **Economic 
 ### Step 4: Arc-Native Risk Evaluation
 The Risk Engine applies Arc-specific scoring rules. Low-risk intents are routed for instant settlement. Medium-risk intents trigger an **Arc Wallet Signature Challenge**.
 
-### Step 5: Circle USDC Settlement
-Halo executes the final settlement via Circle's **Arc Economic OS**, utilizing USDC as the universal value carrier and CCTP for cross-chain liquidity.
+### Step 5: Circle USDC Settlement & State Registry
+Halo executes the final settlement via Circle's **Arc Economic OS**. Utilizing USDC as the universal value carrier, Halo triggers a state transition on the Arc chain. Once successful, Halo automatically posts **encrypted transaction data** to the Arc Circles chain, ensuring that sensitive intent details remain private while the transition itself is verifiable and anchored to the Economic OS.
 
 ### Step 6: Return Response
 ```

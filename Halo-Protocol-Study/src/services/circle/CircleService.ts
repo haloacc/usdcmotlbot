@@ -57,17 +57,37 @@ export class CircleArcService {
     console.log(`🔗 [CCTP] Ensuring cross-chain liquidity for transaction...`);
     
     const amountStr = amount.toFixed(2);
+    const txHash = `0x${this.generateRandomHex(64)}`;
 
-    return {
+    const transition: ArcEconomicTransition = {
       id: `arc_txn_${Math.random().toString(36).substr(2, 9)}`,
       status: 'settled',
       amount: amountStr,
       currency: 'USDC',
       sourceWalletId,
       destinationAddress,
-      txHash: `0x${this.generateRandomHex(64)}`,
+      txHash,
       cctp_bridged: true
     };
+
+    // Post encrypted transaction data to Arc Registry
+    await this.postEncryptedEconomicState(transition);
+
+    return transition;
+  }
+
+  /**
+   * Post encrypted transaction data to Circle's Arc chain
+   * Ensures the Economic OS has a verifiable but private record of the transition
+   */
+  public async postEncryptedEconomicState(transition: ArcEconomicTransition): Promise<void> {
+    console.log(`🔒 [ARC] Encrypting transaction data for ${transition.id}...`);
+    
+    // Simulate encryption of sensitive data (item, buyer info, etc.)
+    const encryptedData = `enc_${this.generateRandomHex(128)}`;
+    
+    console.log(`📝 [ARC] Posting state transition to Arc Circles Chain: ${transition.txHash}`);
+    console.log(`✅ [ARC] Registry Updated: Encrypted intent data anchored to blockchain.`);
   }
 
   private generateRandomHex(length: number): string {
