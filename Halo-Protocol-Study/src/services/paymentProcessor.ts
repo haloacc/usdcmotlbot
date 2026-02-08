@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { circleService } from './circle/CircleService';
+import { circleArcService } from './circle/CircleService';
 import {
   DelegatePaymentRequest,
   DelegatePaymentSuccessResponse,
@@ -22,8 +22,8 @@ export class PaymentProcessor {
    * 
    * Steps:
    * 1. Validate allowance limits
-   * 2. Check for USDC settlement preference
-   * 3. Tokenize card with Stripe OR Execute USDC payment via Circle
+   * 2. Check for Circle Arc Economic Transition preference
+   * 3. Tokenize card with Stripe OR Execute USDC Transition via Circle Arc
    * 4. Create payment intent with risk signals as metadata
    * 5. Confirm payment
    * 6. Return success response or error
@@ -66,30 +66,32 @@ export class PaymentProcessor {
         };
       }
 
-      // NEW: Check for USDC Settlement (Circle/USDC Vision)
+      // NEW: Circle Arc Economic OS Settlement (USDC Vision)
       const settlementMethod = request.metadata?.settlement_method || 'card';
-      if (settlementMethod === 'usdc') {
-        console.log('🔵 [HALO] Routing to USDC Settlement (Circle Service)');
+      if (settlementMethod === 'usdc' || settlementMethod === 'arc') {
+        console.log('🌀 [HALO] Routing to Circle Arc Economic OS Transition');
         
         const destinationAddress = request.metadata?.merchant_wallet || '0x209693Bc6afc0C5328bA36FaF03C514EF312287C';
-        const sourceWalletId = request.metadata?.agent_wallet_id || 'default_agent_wallet';
+        const sourceWalletId = request.metadata?.agent_wallet_id || 'default_arc_agent_wallet';
         
-        const usdcPayment = await circleService.executeUSDCPayment(
+        const arcTransition = await circleArcService.executeEconomicTransition(
           sourceWalletId,
           destinationAddress,
           totalAmount / 100 // Convert cents to USDC dollars
         );
 
-        if (usdcPayment.status === 'success') {
+        if (arcTransition.status === 'settled') {
           return {
-            id: `cir_${usdcPayment.id}`,
+            id: `arc_${arcTransition.id}`,
             created: new Date().toISOString(),
             metadata: {
-              source: 'agent_checkout_usdc',
+              source: 'arc_economic_os_transition',
               merchant_id: request.allowance.merchant_id,
-              tx_hash: usdcPayment.txHash,
-              blockchain: 'base_sepolia',
-              settlement: 'usdc'
+              idempotency_key: arcTransition.id,
+              tx_hash: arcTransition.txHash,
+              blockchain: 'arc_chain',
+              settlement: 'usdc',
+              cctp_bridged: 'true'
             },
           };
         }

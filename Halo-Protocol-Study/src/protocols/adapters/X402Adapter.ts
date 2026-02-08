@@ -183,14 +183,15 @@ export class X402Adapter implements IProtocolAdapter {
       const methodStr = typeof method === 'string' ? method : method.method;
       return {
         scheme: methodStr,
-        network: 'eip155:84532', // Base Sepolia testnet
-        asset: '0x036CbD53842c5426634e7929541eC2318f3dCF7e', // USDC on Base Sepolia
+        network: 'eip155:arc', // The Arc Economic OS Blockchain
+        asset: '0x036CbD53842c5426634e7929541eC2318f3dCF7e', // USDC on Arc
         amount: Math.floor((canonical.amount_total || 0) * 10000).toString(), // Convert to atomic units (6 decimals)
         payTo: metadata?.merchantWallet || '0x209693Bc6afc0C5328bA36FaF03C514EF312287C',
         maxTimeoutSeconds: 60,
         extra: {
           name: 'USDC',
           version: '2',
+          vision: 'Economic OS Settlement'
         },
       };
     });

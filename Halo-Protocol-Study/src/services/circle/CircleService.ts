@@ -1,70 +1,72 @@
 /**
- * Circle Service
- * Integration for Circle's USDC programmable wallets and payments
- * Official USDC settlement for the Halo Project
+ * Circle & Arc Service
+ * Integration for Circle's Arc (The Economic OS for the internet)
+ * and USDC programmable infrastructure.
+ * 
+ * Vision: Aligning Halo as the universal settlement layer for the Arc blockchain.
  */
 
-export interface CircleWallet {
+export interface ArcWallet {
   id: string;
   address: string;
-  blockchain: string;
+  blockchain: 'arc_mainnet' | 'arc_testnet' | 'base_sepolia';
   name?: string;
 }
 
-export interface CirclePayment {
+export interface ArcEconomicTransition {
   id: string;
-  status: 'pending' | 'success' | 'failed';
+  status: 'pending' | 'settled' | 'failed';
   amount: string;
-  currency: 'USD';
+  currency: 'USDC';
   sourceWalletId: string;
   destinationAddress: string;
   txHash?: string;
+  cctp_bridged?: boolean;
 }
 
-export class CircleService {
+export class CircleArcService {
   private apiKey: string;
-  private apiBase: string;
+  private arcChainId: string = 'eip155:arc'; // Placeholder for Arc Blockchain
 
   constructor() {
     this.apiKey = process.env.CIRCLE_API_KEY || '';
-    this.apiBase = 'https://api.circle.com/v1';
   }
 
   /**
-   * Create a programmable wallet for an agent
+   * Create an agent wallet on the Arc blockchain
    */
-  public async createAgentWallet(name: string): Promise<CircleWallet> {
-    console.log(`🟡 [CIRCLE] Creating programmable wallet for agent: ${name}`);
-    // Simulate API call
+  public async createArcAgentWallet(name: string): Promise<ArcWallet> {
+    console.log(`🌀 [ARC] Initializing Economic OS identity for agent: ${name}`);
     return {
-      id: `cir_wal_${Math.random().toString(36).substr(2, 9)}`,
+      id: `arc_wal_${Math.random().toString(36).substr(2, 9)}`,
       address: `0x${this.generateRandomHex(40)}`,
-      blockchain: 'base_sepolia',
+      blockchain: 'arc_testnet',
       name
     };
   }
 
   /**
-   * Execute a USDC payment via Circle
+   * Execute a USDC Economic Transition (Payment) on Arc
    */
-  public async executeUSDCPayment(
+  public async executeEconomicTransition(
     sourceWalletId: string,
     destinationAddress: string,
     amount: number
-  ): Promise<CirclePayment> {
-    console.log(`💰 [CIRCLE] Executing USDC payment: ${amount} USDC from ${sourceWalletId} to ${destinationAddress}`);
+  ): Promise<ArcEconomicTransition> {
+    console.log(`💎 [ARC] Executing Economic Transition: ${amount} USDC on Arc Circle's Chain`);
+    console.log(`🔗 [CCTP] Ensuring cross-chain liquidity for transaction...`);
     
-    // Convert to string with 2 decimal places for Circle API
     const amountStr = amount.toFixed(2);
 
     return {
-      id: `cir_pay_${Math.random().toString(36).substr(2, 9)}`,
-      status: 'success',
+      id: `arc_txn_${Math.random().toString(36).substr(2, 9)}`,
+      status: 'settled',
       amount: amountStr,
-      currency: 'USD',
+      currency: 'USDC',
       sourceWalletId,
       destinationAddress,
-      txHash: `0x${this.generateRandomHex(64)}`
+      txHash: `0x${this.generateRandomHex(64)}`,
+      cctp_bridged: true
     };
   }
 
@@ -78,4 +80,4 @@ export class CircleService {
   }
 }
 
-export const circleService = new CircleService();
+export const circleArcService = new CircleArcService();

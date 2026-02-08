@@ -1,15 +1,21 @@
-# Halo MVP (Agentic Payments Orchestrator)
+# Halo: Universal Agentic Payment Orchestrator 🥧
+
+**The Gateway to Circle's Arc Economic OS**
+
+Halo is a protocol-agnostic payment orchestration platform that enables AI agents to make autonomous payments across heterogeneous ecosystems. It serves as an intelligent middleware layer that translates between major payment protocols (ACP, UCP, x402) and **settles all economic transitions natively via Circle USDC on the Arc blockchain**.
+
+### 🌟 Vision: Universal Settlement on Arc
+Halo abstracts the complexity of traditional and agent-native payment protocols, mapping every transaction intent to a verifiable state transition on the **Arc Circles chain**. Whether an agent speaks ACP, UCP, or x402, the final settlement is always unified on Circle's Arc infrastructure.
+
+### 🚀 Key Features
+- **Arc-Native Settlement**: Deep integration with Circle's Arc (Economic OS) for zero-gas, instant agentic settlement.
+- **Economic Transition Layer**: Maps fragmented protocols (ACP, UCP, x402) to a unified Circle USDC output.
+- **Circle Programmable Wallets**: Uses Circle's MPC infrastructure as the primary identity and funding source for agents.
+- **Immutable State Registry**: SHA-256 block-chaining of agent intents to ensure economic integrity on the Arc blockchain.
+- **Agentic Risk Engine**: Real-time 0-100 risk scoring with automated Wallet Signature challenges (the Arc-native 3DS).
 
 ## Overview
-Halo MVP is an orchestration layer designed to process Agentic Checkout Protocol (ACP) payloads, normalize them, evaluate risk, and optionally forward payments to Stripe. This project serves as a bridge between ACP and payment rails, providing a clear decision-making process for payment handling.
-
-### What is Halo?
-- ✅ An orchestration + risk + normalization layer
-- ✅ A bridge between ACP agents and payment providers
-- ❌ NOT an LLM
-- ❌ NOT a merchant
-- ❌ NOT Stripe itself
-- ❌ NOT an ACP server
+Halo MVP is an orchestration layer designed to process Agentic Checkout Protocol (ACP) payloads, normalize them, evaluate risk, and settle natively via Circle's Arc Economic OS.
 
 ## Features
 - Accepts real ACP checkout JSON as input

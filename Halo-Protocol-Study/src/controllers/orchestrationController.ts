@@ -475,7 +475,7 @@ export class OrchestrationController {
       }
 
       // Step 7: EXECUTE PAYMENT (the agentic part!)
-      console.log('💰 [HALO] Executing delegated payment...');
+      console.log('💎 [HALO] Executing Economic OS Transition (Arc Blockchain)...');
       const { PaymentProcessor } = require('../services/paymentProcessor');
       const processor = new PaymentProcessor();
 
@@ -516,22 +516,14 @@ export class OrchestrationController {
           action: riskResult?.decision === 'challenge' ? 'manual_review' as const : 'authorized' as const,
         }],
         metadata: {
-          source: 'halo_agentic_checkout',
+          source: 'halo_arc_transition',
           prompt: prompt.substring(0, 100),
+          settlement_method: 'arc', // Default to Arc Blockchain for all agentic transactions
+          arc_chain_id: 'eip155:arc'
         },
       };
 
       const paymentResult = await processor.processDelegatePayment(delegatePaymentRequest);
-
-      // Step 7.5: Post update to Moltbook
-      const { moltbookService } = require('../services/MoltbookService');
-      await moltbookService.postTransactionUpdate(
-        'Pi-Halo-Agent',
-        parsedPrompt.item_name,
-        parsedPrompt.amount_cents,
-        'COMPLETED',
-        (paymentResult as any).metadata?.tx_hash
-      );
 
       // Check if payment succeeded
       const paymentSucceeded = 'id' in paymentResult && !('type' in paymentResult);

@@ -272,6 +272,10 @@ export interface DelegatePaymentSuccessResponse {
     source: string;
     merchant_id: string;
     idempotency_key: string;
+    tx_hash?: string;
+    blockchain?: string;
+    settlement?: string;
+    cctp_bridged?: string;
   };
 }
 

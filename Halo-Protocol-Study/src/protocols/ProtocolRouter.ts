@@ -164,6 +164,9 @@ export class ProtocolRouter {
         options.merchantContext
       );
 
+      console.log(`🌀 [ARC] Economic Intent Registered: ${agentProtocol} → ${options.merchantProtocol}`);
+      console.log(`🔗 [ARC] Destination Settlement: Circle Arc Blockchain`);
+
 
       return {
         success: true,

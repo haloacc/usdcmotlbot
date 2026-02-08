@@ -34,10 +34,10 @@
 ## 1. Product Overview
 
 ### 1.1 Vision
-Enable seamless, autonomous commerce for AI agents across any payment protocol and merchant platform.
+Enable the multi-trillion dollar agentic commerce industry to transact seamlessly across any protocol, powered by Circle's Arc (The Economic OS for the internet).
 
 ### 1.2 Mission
-Build the universal payment orchestration layer that abstracts away protocol complexity, manages risk, and ensures reliable payment processing for the agentic economy.
+Build the universal orchestration and settlement layer for the Arc blockchain, ensuring that every agent intent is mapped to a verifiable, zero-gas economic state transition.
 
 ### 1.3 Core Value Propositions
 

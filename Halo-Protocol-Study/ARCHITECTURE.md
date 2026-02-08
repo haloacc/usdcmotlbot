@@ -1,78 +1,82 @@
-# Halo MVP - Architecture & Data Flow
+# Halo: The Economic OS Gateway for Agentic Commerce 🥧
 
-## 🏗️ System Architecture
+**Bridging the Trillion-Dollar Agent Economy to Circle's Arc Blockchain**
+
+## 🏗️ System Architecture: Universal Orchestration to Arc Settlement
+
+Halo is the infrastructure layer designed to capture the multi-trillion dollar agentic commerce industry. It serves as the primary gateway for Circle's **Arc (The Economic OS)**, mapping fragmented agent protocols to unified, verifiable state transitions on the **Arc Circles chain**.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        ACP Agent / Client                         │
+│              AGENT PROTOCOL LAYER (ACP | UCP | x402)            │
+│       The Trillion Dollar Entry Point for Agent Intents         │
 └────────────────────┬────────────────────────────────────────────┘
                      │
-                     │ POST /halo/process-acp
-                     │ {protocol: "ACP", payload: {...}}
+                     │  Protocol-Agnostic Intent Delivery
+                     │  (Natural Language | Structured JSON)
                      │
                      ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    Express Server (Port 3000)                    │
+│               HALO AGENTIC ORCHESTRATION LAYER                  │
 ├─────────────────────────────────────────────────────────────────┤
-│                                                                   │
+│                                                                 │
 │  ┌──────────────────────────────────────────────────────────┐   │
-│  │  Middleware Layer: validateACP                           │   │
-│  │  • Check protocol == "ACP"                               │   │
-│  │  • Validate payload is object                            │   │
-│  │  • Check required fields present                         │   │
+│  │  Universal Protocol Router                               │   │
+│  │  • Detects Agent Protocol (ACP/UCP/x402)                 │   │
+│  │  • Translates Intent to Canonical Economic Model        │   │
 │  └──────────────┬───────────────────────────────────────────┘   │
-│                 │                                                │
-│                 ▼                                                │
+│                 │                                               │
+│                 ▼                                               │
 │  ┌──────────────────────────────────────────────────────────┐   │
-│  │  PaymentController.processACP()                          │   │
-│  │  • Orchestrates the processing pipeline                  │   │
+│  │  Economic State Registry (Intent Ledger)                 │   │
+│  │  • SHA-256 Chaining of Agent Decisions                  │   │
+│  │  • Verifiable Intent Audit Trail for Arc Blockchain      │   │
 │  └──────────────┬───────────────────────────────────────────┘   │
-│                 │                                                │
+│                 │                                               │
 │     ┌───────────┼───────────┐                                   │
 │     ▼           ▼           ▼                                   │
 │  ┌─────────┐ ┌──────────┐ ┌────────────┐                       │
-│  │ Parser  │ │Normalizer│ │RiskEngine  │                       │
+│  │ Risk    │ │Negotiator│ │State      │                       │
+│  │ Engine  │ │Capability│ │Normalizer │                       │
 │  ├─────────┤ ├──────────┤ ├────────────┤                       │
-│  │Extract  │ │Convert to│ │Calculate   │                       │
-│  │fields   │ │internal  │ │risk score  │                       │
-│  │from ACP │ │format    │ │& decision  │                       │
+│  │0-100 Arc│ │Bridge    │ │Map to Arc │                       │
+│  │RiskScore│ │Merchant  │ │Transitions│                       │
 │  └────┬────┘ └────┬─────┘ └─────┬──────┘                       │
 │       │           │             │                               │
 │       └───────────┼─────────────┘                               │
-│                   ▼                                              │
+│                   ▼                                               │
 │           ┌──────────────────┐                                  │
+│           │ Arc Settlement   │                                  │
 │           │ Decision Logic   │                                  │
 │           ├──────────────────┤                                  │
-│           │ score < 30?      │                                  │
-│           │ → APPROVE        │                                  │
+│           │ Score < 30?      │                                  │
+│           │ → SETTLE ON ARC  │                                  │
 │           │                  │                                  │
-│           │ 30 ≤ score ≤ 60? │                                  │
-│           │ → CHALLENGE      │                                  │
+│           │ 30 ≤ Score ≤ 60? │                                  │
+│           │ → WALLET SIG     │                                  │
 │           │                  │                                  │
-│           │ score > 60?      │                                  │
-│           │ → BLOCK          │                                  │
+│           │ Score > 60?      │                                  │
+│           │ → BLOCK INTENT   │                                  │
 │           └────┬─────────────┘                                  │
 │                │                                                │
-│                ├──► decision == "approve"?                      │
+│                ├──► Decision == "settle"?                       │
 │                │         │                                      │
 │                │    Yes  ▼                                      │
 │                │    ┌──────────────────┐                       │
-│                │    │ Stripe Service   │                       │
+│                │    │ Circle Arc Svc   │                       │
 │                │    ├──────────────────┤                       │
-│                │    │Create Payment    │                       │
-│                │    │Intent (test mode)│                       │
+│                │    │USDC Economic OS  │                       │
+│                │    │State Transition  │                       │
 │                │    └──────────────────┘                       │
 │                │                                                │
 │                ▼                                                │
 │    ┌──────────────────────────────────────────────────────┐    │
-│    │ Response Builder                                     │    │
+│    │ Economic Response Builder (Arc Protocol)              │    │
 │    ├──────────────────────────────────────────────────────┤    │
 │    │ {                                                    │    │
-│    │   risk_score: number,                               │    │
-│    │   decision: "approve" | "challenge" | "block",      │    │
-│    │   normalized_payload: {                             │    │
-│    │     halo_normalized: {...}                          │    │
-│    │   }                                                  │    │
+│    │   arc_transition_id: string,                         │    │
+│    │   settlement: "settled" | "pending" | "blocked",     │    │
+│    │   intent_hash: string (Registry Reference)           │    │
 │    │ }                                                    │    │
 │    └──────────────┬───────────────────────────────────────┘    │
 │                   │                                             │
@@ -80,117 +84,28 @@
                     │
                     ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│           Response to Client (JSON)                              │
+│           Economic OS Response (Internet of Value)               │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 📊 Data Flow Diagram
+## 📊 Economic Data Flow
 
-### Step 1: Input Validation
-```
-Raw Request
-    │
-    ├─ Check: protocol == "ACP"
-    │
-    ├─ Check: payload is object
-    │
-    └─ Check: Required fields exist
-       • total
-       • currency
-       • country
-       • payment_provider
-       • shipping_type
-    
-    ✓ PASS → Continue
-    ✗ FAIL → Return 400 Error
-```
+### Step 1: Fragmented Protocol Intake
+Halo accepts any trillion-dollar agent intent, whether it arrives via the Agentic Checkout Protocol (ACP), Universal Commerce Protocol (UCP), or HTTP 402.
 
-### Step 2: Parse ACP Payload
-```
-Input:
-{
-  "total": 83,
-  "currency": "usd",
-  "country": "US",
-  "payment_provider": "stripe",
-  "shipping_type": "express"
-}
+### Step 2: Canonical Intent Translation
+The `ProtocolRouter` strips protocol-specific noise, translating the request into a **Canonical Economic Intent**.
 
-    ↓ (acpParser)
+### Step 3: Immutable Registry Chaining
+Before settlement, every intent and risk decision is recorded in the **Economic State Registry** using SHA-256 block-chaining. This ensures that the agent's commercial history is verifiable on the Arc blockchain.
 
-Parsed:
-{
-  "total_amount": 83,
-  "currency": "usd",
-  "country": "US",
-  "payment_provider": "stripe",
-  "shipping_type": "express"
-}
-```
+### Step 4: Arc-Native Risk Evaluation
+The Risk Engine applies Arc-specific scoring rules. Low-risk intents are routed for instant settlement. Medium-risk intents trigger an **Arc Wallet Signature Challenge**.
 
-### Step 3: Normalize to Internal Format
-```
-Parsed Data
-    │
-    ├─ total_amount * 100 → total_cents (8300)
-    │
-    ├─ currency → currency (usd)
-    │
-    ├─ country → country (US)
-    │
-    ├─ payment_provider.toLowerCase() → provider (stripe)
-    │
-    └─ shipping_type.toLowerCase() → shipping_speed (express)
-
-    ↓ (normalizer)
-
-Normalized:
-{
-  "halo_normalized": {
-    "total_cents": 8300,
-    "currency": "usd",
-    "country": "US",
-    "provider": "stripe",
-    "shipping_speed": "express"
-  }
-}
-```
-
-### Step 4: Calculate Risk Score
-```
-Start Score = 0
-
-Check 1: total_cents > 5000?
-  8300 > 5000? YES → score += 30
-  
-Check 2: country != "US"?
-  "US" != "US"? NO → score += 0
-  
-Check 3: shipping_speed == "express"?
-  "express" == "express"? YES → score += 10
-
-Final Score = 30 + 0 + 10 = 40
-
-Apply Decision Logic:
-  score < 30? NO
-  30 ≤ score ≤ 60? YES → decision = "challenge"
-```
-
-### Step 5: Conditional Stripe Integration
-```
-if decision == "approve":
-  ├─ Call Stripe API
-  ├─ Create PaymentIntent
-  │  ├─ amount: 8300
-  │  ├─ currency: "usd"
-  │  └─ metadata: {country, provider, shipping_speed}
-  └─ Log success/error
-
-else:
-  └─ Skip Stripe processing
-```
+### Step 5: Circle USDC Settlement
+Halo executes the final settlement via Circle's **Arc Economic OS**, utilizing USDC as the universal value carrier and CCTP for cross-chain liquidity.
 
 ### Step 6: Return Response
 ```
