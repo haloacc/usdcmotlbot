@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Halo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .success-banner {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            margin: 0 auto 20px;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .success-banner h1 {
+            font-size: 32px;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .success-banner p {
+            color: #6b7280;
+            font-size: 16px;
+        }
+
+        .receipt-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            margin-bottom: 20px;
+        }
+
+        .receipt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #e5e7eb;
+            margin-bottom: 30px;
+        }
+
+        .company-info h2 {
+            font-size: 24px;
+            color: #111827;
+            margin-bottom: 5px;
+        }
+
+        .company-info p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .order-info {
+            text-align: right;
+        }
+
+        .order-number {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        .order-date {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 20px;
+        }
+
+        .customer-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .detail-group h3 {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-group p {
+            color: #111827;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .items-table {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .items-table thead {
+            background: #f9fafb;
+        }
+
+        .items-table th {
+            padding: 12px;
+            text-align: left;
+            font-size: 13px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .items-table td {
+            padding: 16px 12px;
+            border-bottom: 1px solid #e5e7eb;
+            color: #111827;
+        }
+
+        .item-name {
+            font-weight: 600;
+        }
+
+        .item-qty {
+            text-align: center;
+        }
+
+        .item-price, .item-total {
+            text-align: right;
+        }
+
+        .totals-section {
+            margin-left: auto;
+            width: 300px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 15px;
+        }
+
+        .total-row.subtotal {
+            color: #6b7280;
+        }
+
+        .total-row.grand-total {
+            border-top: 2px solid #e5e7eb;
+            margin-top: 10px;
+            padding-top: 15px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #10b981;
+        }
+
+        .payment-info {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .payment-icon {
+            font-size: 32px;
+        }
+
+        .payment-details h4 {
+            font-size: 14px;
+            color: #111827;
+            margin-bottom: 5px;
+        }
+
+        .payment-details p {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #059669;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-secondary:hover {
+            background: #f9fafb;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: white;
+            font-size: 14px;
+            margin-top: 30px;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .receipt-card {
+                padding: 25px;
+            }
+
+            .receipt-header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .order-info {
+                text-align: left;
+            }
+
+            .customer-details {
+                grid-template-columns: 1fr;
+            }
+
+            .totals-section {
+                width: 100%;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .action-buttons, .footer-note {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-banner">
+            <div class="checkmark">✅</div>
+            <h1>Payment Successful!</h1>
+            <p>Thank you for your order. A confirmation email has been sent to your inbox.</p>
+        </div>
+
+        <div class="receipt-card">
+            <div class="receipt-header">
+                <div class="company-info">
+                    <h2>🌟 Halo</h2>
+                    <p>Agentic Commerce Platform</p>
+                    <p>support@halofy.ai</p>
+                </div>
+                <div class="order-info">
+                    <div class="order-number">
+                        Order #<strong id="orderNumber">Loading...</strong>
+                    </div>
+                    <div class="order-date" id="orderDate">Loading...</div>
+                </div>
+            </div>
+
+            <div class="customer-details">
+                <div class="detail-group">
+                    <h3>Billed To</h3>
+                    <p id="customerName">Loading...</p>
+                    <p id="customerEmail">Loading...</p>
+                    <p id="customerMobile">Loading...</p>
+                </div>
+                <div class="detail-group">
+                    <h3>Transaction Details</h3>
+                    <p>Stripe Session: <strong id="stripeSession">Loading...</strong></p>
+                    <p>Halo Session: <strong id="haloSession">Loading...</strong></p>
+                    <p>Status: <strong style="color: #10b981;">Completed</strong></p>
+                </div>
+            </div>
+
+            <div class="section-title">Order Items</div>
+            
+            <table class="items-table" id="itemsTable">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th class="item-qty">Quantity</th>
+                        <th class="item-price">Unit Price</th>
+                        <th class="item-total">Total</th>
+                    </tr>
+                </thead>
+                <tbody id="itemsBody">
+                    <!-- Items will be loaded here -->
+                </tbody>
+            </table>
+
+            <div class="totals-section">
+                <div class="total-row subtotal">
+                    <span>Subtotal</span>
+                    <span id="subtotal">$0.00</span>
+                </div>
+                <div class="total-row subtotal">
+                    <span>Shipping</span>
+                    <span id="shipping">$0.00</span>
+                </div>
+                <div class="total-row subtotal">
+                    <span>Tax</span>
+                    <span id="tax">$0.00</span>
+                </div>
+                <div class="total-row grand-total">
+                    <span>Total Paid</span>
+                    <span id="total">$0.00</span>
+                </div>
+            </div>
+
+            <div class="payment-info">
+                <div class="section-title">Payment Method</div>
+                <div class="payment-method">
+                    <div class="payment-icon">💳</div>
+                    <div class="payment-details">
+                        <h4 id="paymentMethodType">Card Payment</h4>
+                        <p id="paymentMethodDetails">Processed securely via Stripe</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="window.print()">📄 Print Receipt</button>
+                <button class="btn btn-secondary" onclick="downloadPDF()">📥 Download PDF</button>
+                <a href="/products.html" class="btn btn-primary">🛍️ Continue Shopping</a>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <p>Need help? Contact us at support@halofy.ai</p>
+            <p>© 2026 Halo. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        // Parse URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+        const haloSession = urlParams.get('halo_session');
+
+        // Load order details
+        async function loadOrderDetails() {
+            try {
+                // For demo, generate mock data based on URL params
+                const orderNumber = `ORD-${Date.now().toString().slice(-8)}`;
+                const orderDate = new Date().toLocaleString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                // Get cart data from localStorage or generate sample
+                let cart = JSON.parse(localStorage.getItem('halo_cart') || '[]');
+                
+                // If no cart, create sample data
+                if (cart.length === 0) {
+                    cart = [{
+                        name: 'Sample Product',
+                        price: 100,
+                        quantity: 1,
+                        emoji: '📦'
+                    }];
+                }
+
+                // Get user data
+                const token = localStorage.getItem('halo_token');
+                let userData = { full_name: 'Customer', email: 'customer@example.com', mobile: 'N/A' };
+                
+                if (token) {
+                    try {
+                        const response = await fetch('http://localhost:3000/api/auth/me', {
+                            headers: { 'Authorization': `Bearer ${token}` }
+                        });
+                        if (response.ok) {
+                            const data = await response.json();
+                            userData = data.user;
+                        }
+                    } catch (err) {
+                        console.log('Could not fetch user data:', err);
+                    }
+                }
+
+                // Calculate totals
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const shipping = 25;
+                const tax = subtotal * 0.08;
+                const total = subtotal + shipping + tax;
+
+                // Populate receipt
+                document.getElementById('orderNumber').textContent = orderNumber;
+                document.getElementById('orderDate').textContent = orderDate;
+                document.getElementById('customerName').textContent = userData.full_name || 'N/A';
+                document.getElementById('customerEmail').textContent = userData.email || 'N/A';
+                document.getElementById('customerMobile').textContent = userData.mobile || 'N/A';
+                document.getElementById('stripeSession').textContent = sessionId?.slice(0, 20) + '...' || 'N/A';
+                document.getElementById('haloSession').textContent = haloSession?.slice(0, 20) + '...' || 'N/A';
+
+                // Populate items
+                const itemsBody = document.getElementById('itemsBody');
+                itemsBody.innerHTML = cart.map(item => `
+                    <tr>
+                        <td class="item-name">${item.emoji || '📦'} ${item.name}</td>
+                        <td class="item-qty">${item.quantity}</td>
+                        <td class="item-price">$${item.price.toFixed(2)}</td>
+                        <td class="item-total">$${(item.price * item.quantity).toFixed(2)}</td>
+                    </tr>
+                `).join('');
+
+                // Populate totals
+                document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+                document.getElementById('shipping').textContent = `$${shipping.toFixed(2)}`;
+                document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+                document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+
+                // Clear cart after successful order
+                localStorage.removeItem('halo_cart');
+
+            } catch (error) {
+                console.error('Error loading order details:', error);
+            }
+        }
+
+        function downloadPDF() {
+            alert('PDF download feature coming soon! For now, use the Print option and save as PDF.');
+            window.print();
+        }
+
+        // Load order details on page load
+        loadOrderDetails();
+    </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+  console.log
+    💳 Payment Processor Mode: LIVE (Stripe API)
+
+      at Object.<anonymous> (src/services/paymentProcessor.ts:15:9)
+
+  console.log
+    ⚠️  Email service in development mode - emails will be logged to console
+
+      at new EmailService (src/services/emailService.ts:28:15)
+
+  console.log
+    ✅ SMS service configured with Twilio
+
+      at new SMSService (src/services/smsService.ts:15:15)
+
+  console.log
+    ✅ Loaded acp checkout-request schema
+
+      at ProtocolValidator.loadSchema (src/protocols/protocol-validator.ts:162:21)
+
+  console.log
+    ✅ Loaded acp payment-request schema
+
+      at ProtocolValidator.loadSchema (src/protocols/protocol-validator.ts:162:21)
+
+  console.log
+    ✅ Registered protocol: acp v2026-01-16
+
+      at ProtocolRegistry.register (src/protocols/protocol-registry.ts:38:13)
+
+  console.log
+    ✅ Loaded ucp checkout-request schema
+
+      at ProtocolValidator.loadSchema (src/protocols/protocol-validator.ts:162:21)
+
+  console.log
+    ✅ Loaded ucp checkout-response schema
+
+      at ProtocolValidator.loadSchema (src/protocols/protocol-validator.ts:190:21)
+
+  console.log
+    ✅ Loaded ucp order schema
+
+      at ProtocolValidator.loadSchema (src/protocols/protocol-validator.ts:190:21)
+
+  console.log
+    ✅ Loaded ucp intent schema
+
+      at ProtocolValidator.loadSchema (src/protocols/protocol-validator.ts:175:15)
+
+  console.log
+    ✅ Registered protocol: ucp v2026-01-11
+
+      at ProtocolRegistry.register (src/protocols/protocol-registry.ts:38:13)
+
+  console.log
+    ✅ Loaded x402 payment-required schema
+
+      at ProtocolValidator.loadSchema (src/protocols/protocol-validator.ts:175:15)
+
+  console.log
+    ✅ Loaded x402 payment-payload schema
+
+      at ProtocolValidator.loadSchema (src/protocols/protocol-validator.ts:175:15)
+
+  console.log
+    ✅ Registered protocol: x402 v2.0.0
+
+      at ProtocolRegistry.register (src/protocols/protocol-registry.ts:38:13)
+
+  console.log
+    [ProtocolRouter] Initialized with protocols: [ 'acp', 'ucp', 'x402' ]
+
+      at ProtocolRouter.initialize (src/protocols/ProtocolRouter.ts:76:13)
+
+FAIL tests/integration/paymentController.test.ts (10.172 s)
+  PaymentController Integration Tests - Real ACP Payloads
+    √ should process a real ACP checkout session and return APPROVE decision (112 ms)
+    √ should process ACP with express shipping and return CHALLENGE decision (16 ms)
+    × should process ACP with international shipping and return BLOCK decision (21 ms)
+    √ should return 400 error for invalid protocol (8 ms)
+    √ should return 400 error for missing required fields (10 ms)
+    √ should return 400 error if totals array missing total entry (7 ms)
+
+  ● PaymentController Integration Tests - Real ACP Payloads › should process ACP with international shipping and return BLOCK decision
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "block"
+    Received: "challenge"
+
+    [0m [90m 270 |[39m       [33m.[39mexpect([35m200[39m)[33m;[39m
+     [90m 271 |[39m
+    [31m[1m>[22m[39m[90m 272 |[39m     expect(response[33m.[39mbody[33m.[39mdecision)[33m.[39mtoBe([32m'block'[39m)[33m;[39m
+     [90m     |[39m                                    [31m[1m^[22m[39m
+     [90m 273 |[39m     expect(response[33m.[39mbody[33m.[39mnormalized_payload[33m.[39mhalo_normalized[33m.[39mcountry)[33m.[39mtoBe([32m'FR'[39m)[33m;[39m
+     [90m 274 |[39m     expect(response[33m.[39mbody[33m.[39mnormalized_payload[33m.[39mhalo_normalized[33m.[39mtotal_cents)[33m.[39mtoBe([35m18000[39m)[33m;[39m
+     [90m 275 |[39m     expect(response[33m.[39mbody[33m.[39mnormalized_payload[33m.[39mhalo_normalized[33m.[39mshipping_speed)[33m.[39mtoBe([32m'express'[39m)[33m;[39m[0m
+
+      at Object.<anonymous> (tests/integration/paymentController.test.ts:272:36)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 5 passed, 6 total
+Snapshots:   0 total
+Time:        10.778 s
+Ran all test suites matching /tests\\integration\\paymentController.test.ts/i.

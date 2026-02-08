@@ -1,0 +1,1061 @@
+  console.log
+    💳 Payment Processor Mode: LIVE (Stripe API)
+
+      at Object.<anonymous> (src/services/paymentProcessor.ts:15:9)
+
+  console.log
+    ⚠️  Email service in development mode - emails will be logged to console
+
+      at new EmailService (src/services/emailService.ts:28:15)
+
+  console.log
+    ✅ SMS service configured with Twilio
+
+      at new SMSService (src/services/smsService.ts:15:15)
+
+  console.log
+    ✅ Loaded acp checkout-request schema
+
+      at ProtocolValidator.loadSchema (src/protocols/protocol-validator.ts:162:21)
+
+  console.log
+    ✅ Loaded acp payment-request schema
+
+      at ProtocolValidator.loadSchema (src/protocols/protocol-validator.ts:162:21)
+
+  console.log
+    ✅ Registered protocol: acp v2026-01-16
+
+      at ProtocolRegistry.register (src/protocols/protocol-registry.ts:38:13)
+
+  console.log
+    ✅ Loaded ucp checkout-request schema
+
+      at ProtocolValidator.loadSchema (src/protocols/protocol-validator.ts:162:21)
+
+  console.log
+    ✅ Loaded ucp checkout-response schema
+
+      at ProtocolValidator.loadSchema (src/protocols/protocol-validator.ts:190:21)
+
+  console.log
+    ✅ Loaded ucp order schema
+
+      at ProtocolValidator.loadSchema (src/protocols/protocol-validator.ts:190:21)
+
+  console.log
+    ✅ Loaded ucp intent schema
+
+      at ProtocolValidator.loadSchema (src/protocols/protocol-validator.ts:175:15)
+
+  console.log
+    ✅ Registered protocol: ucp v2026-01-11
+
+      at ProtocolRegistry.register (src/protocols/protocol-registry.ts:38:13)
+
+  console.log
+    ✅ Loaded x402 payment-required schema
+
+      at ProtocolValidator.loadSchema (src/protocols/protocol-validator.ts:175:15)
+
+  console.log
+    ✅ Loaded x402 payment-payload schema
+
+      at ProtocolValidator.loadSchema (src/protocols/protocol-validator.ts:175:15)
+
+  console.log
+    ✅ Registered protocol: x402 v2.0.0
+
+      at ProtocolRegistry.register (src/protocols/protocol-registry.ts:38:13)
+
+  console.log
+    [ProtocolRouter] Initialized with protocols: [ 'acp', 'ucp', 'x402' ]
+
+      at ProtocolRouter.initialize (src/protocols/ProtocolRouter.ts:76:13)
+
+  console.log
+    📝 Parsed prompt: {
+      amount_cents: 2000,
+      item_name: 'shoes',
+      shipping_speed: 'standard',
+      country: 'US',
+      quantity: 1,
+      currency: 'USD',
+      merchant: 'Nike'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:60:13)
+
+  console.log
+    📤 ACP CREATE REQUEST: {
+      items: [ { id: 'sku_nike_air_max', quantity: 1 } ],
+      agent_capabilities: {
+        interventions: {
+          supported: [Array],
+          max_redirects: 1,
+          redirect_context: 'in_app',
+          max_interaction_depth: 2,
+          display_context: 'webview'
+        },
+        features: { async_completion: true, session_persistence: true },
+        payment_methods: [ 'card' ]
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:64:13)
+
+  console.log
+    📥 ACP CREATE RESPONSE: checkout_session_c3pvgoq8jw9
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:74:13)
+
+  console.log
+    🔍 Halo parsed ACP data: {
+      total_cents: 2700,
+      currency: 'usd',
+      country: 'US',
+      payment_provider: 'stripe',
+      shipping_speed: 'standard'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:78:13)
+
+  console.log
+    ✨ Normalized payload: {
+      halo_normalized: {
+        total_cents: 2700,
+        currency: 'usd',
+        country: 'US',
+        provider: 'stripe',
+        shipping_speed: 'standard'
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:82:13)
+
+  console.log
+    ⚠️ Risk assessment: { risk_score: 0, decision: 'approve', factors: {} }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:86:13)
+
+  console.log
+    💳 Stripe PaymentIntent created: pi_test_123
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:94:17)
+
+  console.log
+    📝 Parsed prompt: {
+      amount_cents: 5000,
+      item_name: 'jacket',
+      shipping_speed: 'express',
+      country: 'US',
+      quantity: 1,
+      currency: 'USD',
+      merchant: 'Amazon'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:60:13)
+
+  console.log
+    📤 ACP CREATE REQUEST: {
+      items: [ { id: 'sku_jacket', quantity: 1 } ],
+      agent_capabilities: {
+        interventions: {
+          supported: [Array],
+          max_redirects: 1,
+          redirect_context: 'in_app',
+          max_interaction_depth: 2,
+          display_context: 'webview'
+        },
+        features: { async_completion: true, session_persistence: true },
+        payment_methods: [ 'card' ]
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:64:13)
+
+  console.log
+    📥 ACP CREATE RESPONSE: checkout_session_yrk2drmecv
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:74:13)
+
+  console.log
+    🔍 Halo parsed ACP data: {
+      total_cents: 7000,
+      currency: 'usd',
+      country: 'US',
+      payment_provider: 'stripe',
+      shipping_speed: 'express'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:78:13)
+
+  console.log
+    ✨ Normalized payload: {
+      halo_normalized: {
+        total_cents: 7000,
+        currency: 'usd',
+        country: 'US',
+        provider: 'stripe',
+        shipping_speed: 'express'
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:82:13)
+
+  console.log
+    ⚠️ Risk assessment: {
+      risk_score: 20,
+      decision: 'approve',
+      factors: { elevated_value: true, express_shipping: true }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:86:13)
+
+  console.log
+    💳 Stripe PaymentIntent created: pi_test_123
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:94:17)
+
+  console.log
+    📝 Parsed prompt: {
+      amount_cents: 10000,
+      item_name: 'item',
+      shipping_speed: 'express',
+      country: 'FR',
+      quantity: 1,
+      currency: 'USD',
+      merchant: undefined
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:60:13)
+
+  console.log
+    📤 ACP CREATE REQUEST: {
+      items: [ { id: 'sku_item', quantity: 1 } ],
+      agent_capabilities: {
+        interventions: {
+          supported: [Array],
+          max_redirects: 1,
+          redirect_context: 'in_app',
+          max_interaction_depth: 2,
+          display_context: 'webview'
+        },
+        features: { async_completion: true, session_persistence: true },
+        payment_methods: [ 'card' ]
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:64:13)
+
+  console.log
+    📥 ACP CREATE RESPONSE: checkout_session_klwhvw3gm6
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:74:13)
+
+  console.log
+    🔍 Halo parsed ACP data: {
+      total_cents: 12500,
+      currency: 'usd',
+      country: 'FR',
+      payment_provider: 'stripe',
+      shipping_speed: 'express'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:78:13)
+
+  console.log
+    ✨ Normalized payload: {
+      halo_normalized: {
+        total_cents: 12500,
+        currency: 'usd',
+        country: 'FR',
+        provider: 'stripe',
+        shipping_speed: 'express'
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:82:13)
+
+  console.log
+    ⚠️ Risk assessment: {
+      risk_score: 50,
+      decision: 'challenge',
+      factors: { moderate_value: true, international: true, express_shipping: true }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:86:13)
+
+  console.log
+    📝 Parsed prompt: {
+      amount_cents: 3000,
+      item_name: 'shirts',
+      shipping_speed: 'standard',
+      country: 'US',
+      quantity: 3,
+      currency: 'USD',
+      merchant: 'eBay'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:60:13)
+
+  console.log
+    📤 ACP CREATE REQUEST: {
+      items: [ { id: 'sku_shirts', quantity: 3 } ],
+      agent_capabilities: {
+        interventions: {
+          supported: [Array],
+          max_redirects: 1,
+          redirect_context: 'in_app',
+          max_interaction_depth: 2,
+          display_context: 'webview'
+        },
+        features: { async_completion: true, session_persistence: true },
+        payment_methods: [ 'card' ]
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:64:13)
+
+  console.log
+    📥 ACP CREATE RESPONSE: checkout_session_hj1aapnkwl7
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:74:13)
+
+  console.log
+    🔍 Halo parsed ACP data: {
+      total_cents: 3800,
+      currency: 'usd',
+      country: 'US',
+      payment_provider: 'stripe',
+      shipping_speed: 'standard'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:78:13)
+
+  console.log
+    ✨ Normalized payload: {
+      halo_normalized: {
+        total_cents: 3800,
+        currency: 'usd',
+        country: 'US',
+        provider: 'stripe',
+        shipping_speed: 'standard'
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:82:13)
+
+  console.log
+    ⚠️ Risk assessment: { risk_score: 0, decision: 'approve', factors: {} }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:86:13)
+
+  console.log
+    💳 Stripe PaymentIntent created: pi_test_123
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:94:17)
+
+  console.log
+    📝 Parsed prompt: {
+      amount_cents: 5000,
+      item_name: 'headphones',
+      shipping_speed: 'standard',
+      country: 'US',
+      quantity: 1,
+      currency: 'USD',
+      merchant: 'Best'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:60:13)
+
+  console.log
+    📤 ACP CREATE REQUEST: {
+      items: [ { id: 'sku_headphones', quantity: 1 } ],
+      agent_capabilities: {
+        interventions: {
+          supported: [Array],
+          max_redirects: 1,
+          redirect_context: 'in_app',
+          max_interaction_depth: 2,
+          display_context: 'webview'
+        },
+        features: { async_completion: true, session_persistence: true },
+        payment_methods: [ 'card' ]
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:64:13)
+
+  console.log
+    📥 ACP CREATE RESPONSE: checkout_session_d08pu9sa1xk
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:74:13)
+
+  console.log
+    🔍 Halo parsed ACP data: {
+      total_cents: 6000,
+      currency: 'usd',
+      country: 'US',
+      payment_provider: 'stripe',
+      shipping_speed: 'standard'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:78:13)
+
+  console.log
+    ✨ Normalized payload: {
+      halo_normalized: {
+        total_cents: 6000,
+        currency: 'usd',
+        country: 'US',
+        provider: 'stripe',
+        shipping_speed: 'standard'
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:82:13)
+
+  console.log
+    ⚠️ Risk assessment: {
+      risk_score: 10,
+      decision: 'approve',
+      factors: { elevated_value: true }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:86:13)
+
+  console.log
+    💳 Stripe PaymentIntent created: pi_test_123
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:94:17)
+
+  console.log
+    📝 Parsed prompt: {
+      amount_cents: 5000,
+      item_name: 'headphones',
+      shipping_speed: 'standard',
+      country: 'GB',
+      quantity: 1,
+      currency: 'USD',
+      merchant: undefined
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:60:13)
+
+  console.log
+    📤 ACP CREATE REQUEST: {
+      items: [ { id: 'sku_headphones', quantity: 1 } ],
+      agent_capabilities: {
+        interventions: {
+          supported: [Array],
+          max_redirects: 1,
+          redirect_context: 'in_app',
+          max_interaction_depth: 2,
+          display_context: 'webview'
+        },
+        features: { async_completion: true, session_persistence: true },
+        payment_methods: [ 'card' ]
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:64:13)
+
+  console.log
+    📥 ACP CREATE RESPONSE: checkout_session_esy7le7v86
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:74:13)
+
+  console.log
+    🔍 Halo parsed ACP data: {
+      total_cents: 6000,
+      currency: 'usd',
+      country: 'GB',
+      payment_provider: 'stripe',
+      shipping_speed: 'standard'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:78:13)
+
+  console.log
+    ✨ Normalized payload: {
+      halo_normalized: {
+        total_cents: 6000,
+        currency: 'usd',
+        country: 'GB',
+        provider: 'stripe',
+        shipping_speed: 'standard'
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:82:13)
+
+  console.log
+    ⚠️ Risk assessment: {
+      risk_score: 30,
+      decision: 'challenge',
+      factors: { elevated_value: true, international: true }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:86:13)
+
+  console.log
+    📝 Parsed prompt: {
+      amount_cents: 1500,
+      item_name: 'item',
+      shipping_speed: 'standard',
+      country: 'US',
+      quantity: 1,
+      currency: 'USD',
+      merchant: undefined
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:60:13)
+
+  console.log
+    📤 ACP CREATE REQUEST: {
+      items: [ { id: 'sku_item', quantity: 1 } ],
+      agent_capabilities: {
+        interventions: {
+          supported: [Array],
+          max_redirects: 1,
+          redirect_context: 'in_app',
+          max_interaction_depth: 2,
+          display_context: 'webview'
+        },
+        features: { async_completion: true, session_persistence: true },
+        payment_methods: [ 'card' ]
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:64:13)
+
+  console.log
+    📥 ACP CREATE RESPONSE: checkout_session_f83x7eokaxg
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:74:13)
+
+  console.log
+    🔍 Halo parsed ACP data: {
+      total_cents: 2150,
+      currency: 'usd',
+      country: 'US',
+      payment_provider: 'stripe',
+      shipping_speed: 'standard'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:78:13)
+
+  console.log
+    ✨ Normalized payload: {
+      halo_normalized: {
+        total_cents: 2150,
+        currency: 'usd',
+        country: 'US',
+        provider: 'stripe',
+        shipping_speed: 'standard'
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:82:13)
+
+  console.log
+    ⚠️ Risk assessment: { risk_score: 0, decision: 'approve', factors: {} }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:86:13)
+
+  console.log
+    💳 Stripe PaymentIntent created: pi_test_123
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:94:17)
+
+  console.log
+    📝 Parsed prompt: {
+      amount_cents: 10000,
+      item_name: 'laptop',
+      shipping_speed: 'express',
+      country: 'US',
+      quantity: 1,
+      currency: 'USD',
+      merchant: undefined
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:60:13)
+
+  console.log
+    📤 ACP CREATE REQUEST: {
+      items: [ { id: 'sku_gaming_laptop_pro', quantity: 1 } ],
+      agent_capabilities: {
+        interventions: {
+          supported: [Array],
+          max_redirects: 1,
+          redirect_context: 'in_app',
+          max_interaction_depth: 2,
+          display_context: 'webview'
+        },
+        features: { async_completion: true, session_persistence: true },
+        payment_methods: [ 'card' ]
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:64:13)
+
+  console.log
+    📥 ACP CREATE RESPONSE: checkout_session_llxhiaaesa
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:74:13)
+
+  console.log
+    🔍 Halo parsed ACP data: {
+      total_cents: 12500,
+      currency: 'usd',
+      country: 'US',
+      payment_provider: 'stripe',
+      shipping_speed: 'express'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:78:13)
+
+  console.log
+    ✨ Normalized payload: {
+      halo_normalized: {
+        total_cents: 12500,
+        currency: 'usd',
+        country: 'US',
+        provider: 'stripe',
+        shipping_speed: 'express'
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:82:13)
+
+  console.log
+    ⚠️ Risk assessment: {
+      risk_score: 30,
+      decision: 'challenge',
+      factors: { moderate_value: true, express_shipping: true }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:86:13)
+
+  console.log
+    📝 Parsed prompt: {
+      amount_cents: 9900,
+      item_name: 'sneakers',
+      shipping_speed: 'express',
+      country: 'US',
+      quantity: 1,
+      currency: 'USD',
+      merchant: 'Nike'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:60:13)
+
+  console.log
+    📤 ACP CREATE REQUEST: {
+      items: [ { id: 'sku_sneakers', quantity: 1 } ],
+      agent_capabilities: {
+        interventions: {
+          supported: [Array],
+          max_redirects: 1,
+          redirect_context: 'in_app',
+          max_interaction_depth: 2,
+          display_context: 'webview'
+        },
+        features: { async_completion: true, session_persistence: true },
+        payment_methods: [ 'card' ]
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:64:13)
+
+  console.log
+    📥 ACP CREATE RESPONSE: checkout_session_efhalj2pkkp
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:74:13)
+
+  console.log
+    🔍 Halo parsed ACP data: {
+      total_cents: 12390,
+      currency: 'usd',
+      country: 'US',
+      payment_provider: 'stripe',
+      shipping_speed: 'express'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:78:13)
+
+  console.log
+    ✨ Normalized payload: {
+      halo_normalized: {
+        total_cents: 12390,
+        currency: 'usd',
+        country: 'US',
+        provider: 'stripe',
+        shipping_speed: 'express'
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:82:13)
+
+  console.log
+    ⚠️ Risk assessment: {
+      risk_score: 30,
+      decision: 'challenge',
+      factors: { moderate_value: true, express_shipping: true }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:86:13)
+
+  console.log
+    📝 Parsed prompt: {
+      amount_cents: 9999,
+      item_name: 'item',
+      shipping_speed: 'standard',
+      country: 'US',
+      quantity: 1,
+      currency: 'USD',
+      merchant: undefined
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:60:13)
+
+  console.log
+    📤 ACP CREATE REQUEST: {
+      items: [ { id: 'sku_item', quantity: 1 } ],
+      agent_capabilities: {
+        interventions: {
+          supported: [Array],
+          max_redirects: 1,
+          redirect_context: 'in_app',
+          max_interaction_depth: 2,
+          display_context: 'webview'
+        },
+        features: { async_completion: true, session_persistence: true },
+        payment_methods: [ 'card' ]
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:64:13)
+
+  console.log
+    📥 ACP CREATE RESPONSE: checkout_session_aqnbz0heh1p
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:74:13)
+
+  console.log
+    🔍 Halo parsed ACP data: {
+      total_cents: 11499,
+      currency: 'usd',
+      country: 'US',
+      payment_provider: 'stripe',
+      shipping_speed: 'standard'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:78:13)
+
+  console.log
+    ✨ Normalized payload: {
+      halo_normalized: {
+        total_cents: 11499,
+        currency: 'usd',
+        country: 'US',
+        provider: 'stripe',
+        shipping_speed: 'standard'
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:82:13)
+
+  console.log
+    ⚠️ Risk assessment: {
+      risk_score: 20,
+      decision: 'approve',
+      factors: { moderate_value: true }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:86:13)
+
+  console.log
+    💳 Stripe PaymentIntent created: pi_test_123
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:94:17)
+
+  console.log
+    📝 Parsed prompt: {
+      amount_cents: 500000,
+      item_name: 'laptop',
+      shipping_speed: 'express',
+      country: 'FR',
+      quantity: 1,
+      currency: 'USD',
+      merchant: undefined
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:60:13)
+
+  console.log
+    📤 ACP CREATE REQUEST: {
+      items: [ { id: 'sku_gaming_laptop_pro', quantity: 1 } ],
+      agent_capabilities: {
+        interventions: {
+          supported: [Array],
+          max_redirects: 1,
+          redirect_context: 'in_app',
+          max_interaction_depth: 2,
+          display_context: 'webview'
+        },
+        features: { async_completion: true, session_persistence: true },
+        payment_methods: [ 'card' ]
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:64:13)
+
+  console.log
+    📥 ACP CREATE RESPONSE: checkout_session_vb25snfcqyc
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:74:13)
+
+  console.log
+    🔍 Halo parsed ACP data: {
+      total_cents: 551500,
+      currency: 'usd',
+      country: 'FR',
+      payment_provider: 'stripe',
+      shipping_speed: 'express'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:78:13)
+
+  console.log
+    ✨ Normalized payload: {
+      halo_normalized: {
+        total_cents: 551500,
+        currency: 'usd',
+        country: 'FR',
+        provider: 'stripe',
+        shipping_speed: 'express'
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:82:13)
+
+  console.log
+    ⚠️ Risk assessment: {
+      risk_score: 80,
+      decision: 'block',
+      factors: {
+        very_high_value: true,
+        international: true,
+        express_shipping: true
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:86:13)
+
+  console.log
+    📝 Parsed prompt: {
+      amount_cents: 5000,
+      item_name: 'item',
+      shipping_speed: 'standard',
+      country: 'US',
+      quantity: 1,
+      currency: 'USD',
+      merchant: undefined
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:60:13)
+
+  console.log
+    📤 ACP CREATE REQUEST: {
+      items: [ { id: 'sku_item', quantity: 1 } ],
+      agent_capabilities: {
+        interventions: {
+          supported: [Array],
+          max_redirects: 1,
+          redirect_context: 'in_app',
+          max_interaction_depth: 2,
+          display_context: 'webview'
+        },
+        features: { async_completion: true, session_persistence: true },
+        payment_methods: [ 'card' ]
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:64:13)
+
+  console.log
+    📥 ACP CREATE RESPONSE: checkout_session_p6kpdqhsib
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:74:13)
+
+  console.log
+    🔍 Halo parsed ACP data: {
+      total_cents: 6000,
+      currency: 'usd',
+      country: 'US',
+      payment_provider: 'stripe',
+      shipping_speed: 'standard'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:78:13)
+
+  console.log
+    ✨ Normalized payload: {
+      halo_normalized: {
+        total_cents: 6000,
+        currency: 'usd',
+        country: 'US',
+        provider: 'stripe',
+        shipping_speed: 'standard'
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:82:13)
+
+  console.log
+    ⚠️ Risk assessment: {
+      risk_score: 10,
+      decision: 'approve',
+      factors: { elevated_value: true }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:86:13)
+
+  console.log
+    💳 Stripe PaymentIntent created: pi_test_123
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:94:17)
+
+  console.log
+    📝 Parsed prompt: {
+      amount_cents: 5000,
+      item_name: 'item',
+      shipping_speed: 'standard',
+      country: 'US',
+      quantity: 1,
+      currency: 'USD',
+      merchant: undefined
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:60:13)
+
+  console.log
+    📤 ACP CREATE REQUEST: {
+      items: [ { id: 'sku_item', quantity: 1 } ],
+      agent_capabilities: {
+        interventions: {
+          supported: [Array],
+          max_redirects: 1,
+          redirect_context: 'in_app',
+          max_interaction_depth: 2,
+          display_context: 'webview'
+        },
+        features: { async_completion: true, session_persistence: true },
+        payment_methods: [ 'card' ]
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:64:13)
+
+  console.log
+    📥 ACP CREATE RESPONSE: checkout_session_1jvg0sv0cmy
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:74:13)
+
+  console.log
+    🔍 Halo parsed ACP data: {
+      total_cents: 6000,
+      currency: 'usd',
+      country: 'US',
+      payment_provider: 'stripe',
+      shipping_speed: 'standard'
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:78:13)
+
+  console.log
+    ✨ Normalized payload: {
+      halo_normalized: {
+        total_cents: 6000,
+        currency: 'usd',
+        country: 'US',
+        provider: 'stripe',
+        shipping_speed: 'standard'
+      }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:82:13)
+
+  console.log
+    ⚠️ Risk assessment: {
+      risk_score: 10,
+      decision: 'approve',
+      factors: { elevated_value: true }
+    }
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:86:13)
+
+  console.log
+    💳 Stripe PaymentIntent created: pi_test_123
+
+      at processAgenticPayment (src/controllers/agenticPaymentController.ts:94:17)
+
+FAIL tests/integration/agenticPayment.test.ts (11.422 s)
+  Agentic Payment Controller Integration Tests
+    POST /halo/process-payment
+      √ should process simple payment prompt and return APPROVE (136 ms)
+      × should process payment with express shipping (34 ms)
+      × should process international payment (22 ms)
+      √ should process payment with multiple items (23 ms)
+      √ should extract merchant correctly (21 ms)
+      √ should extract country correctly (22 ms)
+      √ should return 400 for missing prompt (9 ms)
+      √ should return 400 for invalid prompt type (9 ms)
+      √ should attempt to create payment intent for APPROVE decisions (26 ms)
+      √ should not create payment intent for CHALLENGE decisions (23 ms)
+      √ should return normalized payload with correct structure (19 ms)
+      √ should handle decimal amounts (28 ms)
+      √ should handle large amounts (20 ms)
+      √ should generate unique checkout session IDs (43 ms)
+
+  ● Agentic Payment Controller Integration Tests › POST /halo/process-payment › should process payment with express shipping
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "challenge"
+    Received: "approve"
+
+    [0m [90m 41 |[39m       expect(response[33m.[39mbody[33m.[39msuccess)[33m.[39mtoBe([36mtrue[39m)[33m;[39m
+     [90m 42 |[39m       expect(response[33m.[39mbody[33m.[39mnormalized_payload[33m.[39mhalo_normalized[33m.[39mshipping_speed)[33m.[39mtoBe([32m'express'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 43 |[39m       expect(response[33m.[39mbody[33m.[39mdecision)[33m.[39mtoBe([32m'challenge'[39m)[33m;[39m [90m// $50 + express = score 40[39m
+     [90m    |[39m                                      [31m[1m^[22m[39m
+     [90m 44 |[39m       expect(response[33m.[39mbody[33m.[39mrisk_score)[33m.[39mtoBe([35m40[39m)[33m;[39m
+     [90m 45 |[39m     })[33m;[39m
+     [90m 46 |[39m[0m
+
+      at Object.<anonymous> (tests/integration/agenticPayment.test.ts:43:38)
+
+  ● Agentic Payment Controller Integration Tests › POST /halo/process-payment › should process international payment
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "block"
+    Received: "challenge"
+
+    [0m [90m 55 |[39m       expect(response[33m.[39mbody[33m.[39msuccess)[33m.[39mtoBe([36mtrue[39m)[33m;[39m
+     [90m 56 |[39m       expect(response[33m.[39mbody[33m.[39mnormalized_payload[33m.[39mhalo_normalized[33m.[39mcountry)[33m.[39mtoBe([32m'FR'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 57 |[39m       expect(response[33m.[39mbody[33m.[39mdecision)[33m.[39mtoBe([32m'block'[39m)[33m;[39m [90m// $100 + FR + express = score 60[39m
+     [90m    |[39m                                      [31m[1m^[22m[39m
+     [90m 58 |[39m       expect(response[33m.[39mbody[33m.[39mrisk_score)[33m.[39mtoBe([35m60[39m)[33m;[39m
+     [90m 59 |[39m     })[33m;[39m
+     [90m 60 |[39m[0m
+
+      at Object.<anonymous> (tests/integration/agenticPayment.test.ts:57:38)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 12 passed, 14 total
+Snapshots:   0 total
+Time:        12.211 s
+Ran all test suites matching /tests\\integration\\agenticPayment.test.ts/i.
