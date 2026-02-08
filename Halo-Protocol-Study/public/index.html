@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halo · Agentic Commerce Orchestrator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <img src="halo-logo.png" alt="Halo Logo" class="brand-logo-img" style="height: 40px; width: auto;">
+                </div>
+                <div class="brand-text">
+                    <span class="brand-name">Halo</span>
+                    <span class="brand-tagline">Agentic Commerce</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-tab="checkout">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    </svg>
+                    <span>Checkout</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="sessions">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                    <span>Sessions</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="orders">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 0 1-8 0" />
+                    </svg>
+                    <span>Orders</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="api">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 18 22 12 16 6" />
+                        <polyline points="8 6 2 12 8 18" />
+                    </svg>
+                    <span>API Explorer</span>
+                </a>
+                <a href="/dashboard.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.09a2 2 0 0 1-1-1.74v-.47a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-config">
+                <h4 class="config-title">Configuration</h4>
+
+                <div class="config-group">
+                    <label class="config-label">Merchant Protocol</label>
+                    <select id="merchant-protocol" class="config-select">
+                        <option value="acp">ACP (Agentic Commerce)</option>
+                        <option value="ucp">UCP (Universal Commerce)</option>
+                        <option value="x402">x402 (HTTP 402)</option>
+                    </select>
+                </div>
+
+                <div class="config-group">
+                    <label class="config-label checkbox-label">
+                        <input type="checkbox" id="agentic-mode" checked class="config-checkbox">
+                        <span class="checkbox-custom"></span>
+                        <span>Agentic Mode</span>
+                    </label>
+                    <p class="config-hint">Agent pays on your behalf using delegated credentials</p>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="protocol-badges">
+                    <span class="badge badge-acp">ACP v2026</span>
+                    <span class="badge badge-ucp">UCP v1.0</span>
+                    <span class="badge badge-x402">x402</span>
+                </div>
+                <p class="footer-text">Powered by Stripe</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="header-left">
+                    <h1 class="page-title">Agentic Checkout</h1>
+                    <p class="page-subtitle">Natural language commerce with protocol translation</p>
+                </div>
+                <div class="header-right">
+                    <div class="status-indicator online">
+                        <span class="status-dot"></span>
+                        <span>Connected</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="chat-container" id="tab-checkout">
+                <div class="chat-messages" id="chat-history">
+                    <div class="welcome-message">
+                        <div class="welcome-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                                <line x1="9" y1="9" x2="9.01" y2="9" />
+                                <line x1="15" y1="9" x2="15.01" y2="9" />
+                            </svg>
+                        </div>
+                        <h2>Welcome to Halo</h2>
+                        <p>I'm your agentic commerce assistant. I'll guide you through the checkout process by asking
+                            for quantities and confirming your order details.</p>
+
+                        <div class="featured-products" style="margin: 30px 0;">
+                            <h3 style="font-size: 16px; color: #6b7280; margin-bottom: 15px;">✨ Featured Products</h3>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                                <div class="product-quick-card" onclick="quickBuy('Gaming Laptop', 1500)">
+                                    <div style="font-size: 40px; margin-bottom: 8px;">💻</div>
+                                    <div style="font-weight: 600; font-size: 14px; color: #111827;">Gaming Laptop</div>
+                                    <div style="color: #667eea; font-weight: 700; margin-top: 4px;">$1,500</div>
+                                    <button class="quick-buy-btn">Quick Buy</button>
+                                </div>
+                                <div class="product-quick-card" onclick="quickBuy('Wireless Headphones', 299)">
+                                    <div style="font-size: 40px; margin-bottom: 8px;">🎧</div>
+                                    <div style="font-weight: 600; font-size: 14px; color: #111827;">Headphones</div>
+                                    <div style="color: #667eea; font-weight: 700; margin-top: 4px;">$299</div>
+                                    <button class="quick-buy-btn">Quick Buy</button>
+                                </div>
+                                <div class="product-quick-card" onclick="quickBuy('Smart Watch', 399)">
+                                    <div style="font-size: 40px; margin-bottom: 8px;">⌚</div>
+                                    <div style="font-weight: 600; font-size: 14px; color: #111827;">Smart Watch</div>
+                                    <div style="color: #667eea; font-weight: 700; margin-top: 4px;">$399</div>
+                                    <button class="quick-buy-btn">Quick Buy</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="example-prompts">
+                            <h3 style="font-size: 14px; color: #6b7280; margin-bottom: 10px;">💬 Or try these prompts:
+                            </h3>
+                            <button class="example-btn" data-prompt="Buy a mechanical keyboard for 149 dollars">🎹
+                                Mechanical keyboard</button>
+                            <button class="example-btn"
+                                data-prompt="Get wireless headphones for 299 dollars with express shipping">🎧
+                                Headphones express</button>
+                            <button class="example-btn" data-prompt="Purchase a gaming laptop for 1500 dollars">💻
+                                Gaming laptop</button>
+                            <button class="example-btn" onclick="showSampleConfirmation()"
+                                style="background: rgba(16, 185, 129, 0.1); border-color: #10b981; color: #10b981;">✅
+                                See sample confirmation</button>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="chat-input-form" id="chat-form">
+                    <div class="input-wrapper">
+                        <input type="text" id="user-input"
+                            placeholder="Try: 'Buy a keyboard for 50 dollars' or 'Get headphones for 200 euros'"
+                            autocomplete="off">
+                        <button type="submit" class="send-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13" />
+                                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Sessions Tab -->
+            <div class="tab-content" id="tab-sessions" style="display: none;">
+                <div class="tab-header">
+                    <h2>Checkout Sessions</h2>
+                    <button class="btn btn-primary" onclick="refreshSessions()">Refresh</button>
+                </div>
+                <div class="sessions-list" id="sessions-list">
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                        </svg>
+                        <p>No active sessions</p>
+                        <small>Sessions will appear here when you start a checkout</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Tab -->
+            <div class="tab-content" id="tab-orders" style="display: none;">
+                <div class="tab-header">
+                    <h2>Orders</h2>
+                    <button class="btn btn-primary" onclick="refreshOrders()">Refresh</button>
+                </div>
+                <div class="orders-list" id="orders-list">
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <path d="M16 10a4 4 0 0 1-8 0" />
+                        </svg>
+                        <p>No orders yet</p>
+                        <small>Completed checkouts will appear here</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- API Explorer Tab -->
+            <div class="tab-content" id="tab-api" style="display: none;">
+                <div class="tab-header">
+                    <h2>API Explorer</h2>
+                    <div class="api-stats" id="api-stats"></div>
+                </div>
+                <div class="api-explorer">
+                    <div class="api-section">
+                        <h3>🔄 ACP Endpoints</h3>
+                        <div class="endpoint-list">
+                            <div class="endpoint"
+                                onclick="testEndpoint('POST', '/api/acp/checkout', {items: [{id: 'prod_1', quantity: 1}]})">
+                                <span class="method post">POST</span>
+                                <code>/api/acp/checkout</code>
+                                <small>Create checkout session</small>
+                            </div>
+                            <div class="endpoint" onclick="testEndpoint('GET', '/api/acp/checkout/{id}')">
+                                <span class="method get">GET</span>
+                                <code>/api/acp/checkout/:id</code>
+                                <small>Get session details</small>
+                            </div>
+                            <div class="endpoint" onclick="testEndpoint('PATCH', '/api/acp/checkout/{id}')">
+                                <span class="method patch">PATCH</span>
+                                <code>/api/acp/checkout/:id</code>
+                                <small>Update session</small>
+                            </div>
+                            <div class="endpoint" onclick="testEndpoint('POST', '/api/acp/checkout/{id}/complete')">
+                                <span class="method post">POST</span>
+                                <code>/api/acp/checkout/:id/complete</code>
+                                <small>Complete with payment</small>
+                            </div>
+                            <div class="endpoint" onclick="testEndpoint('POST', '/api/acp/checkout/{id}/verify')">
+                                <span class="method post">POST</span>
+                                <code>/api/acp/checkout/:id/verify</code>
+                                <small>Step-up verification</small>
+                            </div>
+                            <div class="endpoint" onclick="testEndpoint('DELETE', '/api/acp/checkout/{id}')">
+                                <span class="method delete">DELETE</span>
+                                <code>/api/acp/checkout/:id</code>
+                                <small>Cancel session</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="api-section">
+                        <h3>📦 Order Endpoints</h3>
+                        <div class="endpoint-list">
+                            <div class="endpoint" onclick="testEndpoint('GET', '/api/orders')">
+                                <span class="method get">GET</span>
+                                <code>/api/orders</code>
+                                <small>List all orders</small>
+                            </div>
+                            <div class="endpoint" onclick="testEndpoint('GET', '/api/orders/{id}')">
+                                <span class="method get">GET</span>
+                                <code>/api/orders/:id</code>
+                                <small>Get order details</small>
+                            </div>
+                            <div class="endpoint" onclick="testEndpoint('POST', '/api/orders/{id}/ship')">
+                                <span class="method post">POST</span>
+                                <code>/api/orders/:id/ship</code>
+                                <small>Mark as shipped</small>
+                            </div>
+                            <div class="endpoint" onclick="testEndpoint('POST', '/api/orders/{id}/refund')">
+                                <span class="method post">POST</span>
+                                <code>/api/orders/:id/refund</code>
+                                <small>Process refund</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="api-section">
+                        <h3>💰 x402 Endpoints</h3>
+                        <div class="endpoint-list">
+                            <div class="endpoint" onclick="testEndpoint('GET', '/api/x402/resource/demo?price=100')">
+                                <span class="method get">GET</span>
+                                <code>/api/x402/resource/:id</code>
+                                <small>Request protected resource (402)</small>
+                            </div>
+                            <div class="endpoint" onclick="testEndpoint('POST', '/api/x402/pay')">
+                                <span class="method post">POST</span>
+                                <code>/api/x402/pay</code>
+                                <small>Submit crypto payment</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="api-section">
+                        <h3>📊 System Endpoints</h3>
+                        <div class="endpoint-list">
+                            <div class="endpoint" onclick="testEndpoint('GET', '/api/sessions')">
+                                <span class="method get">GET</span>
+                                <code>/api/sessions</code>
+                                <small>List active sessions</small>
+                            </div>
+                            <div class="endpoint" onclick="testEndpoint('GET', '/api/stats')">
+                                <span class="method get">GET</span>
+                                <code>/api/stats</code>
+                                <small>System statistics</small>
+                            </div>
+                            <div class="endpoint"
+                                onclick="testEndpoint('POST', '/api/fulfillment/options', {items: [{id: 'item1', name: 'Test', quantity: 1}], total: 5000})">
+                                <span class="method post">POST</span>
+                                <code>/api/fulfillment/options</code>
+                                <small>Get shipping options</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="api-response-panel">
+                        <h4>Response</h4>
+                        <pre id="api-response">Click an endpoint to test it</pre>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Debug Panel -->
+        <aside class="debug-panel">
+            <div class="debug-header">
+                <h3>Protocol Inspector</h3>
+                <button class="debug-clear" id="clear-debug">Clear</button>
+            </div>
+            <div class="debug-log" id="debug-log">
+                <div class="debug-empty">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 18 22 12 16 6" />
+                        <polyline points="8 6 2 12 8 18" />
+                    </svg>
+                    <p>Protocol traces will appear here</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- 3DS Verification Modal -->
+    <div class="modal-overlay" id="verification-modal">
+        <div class="modal-content verification-modal">
+            <div class="modal-header">
+                <div class="modal-icon warning">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        <path d="M12 8v4" />
+                        <path d="M12 16h.01" />
+                    </svg>
+                </div>
+                <h2>Additional Verification Required</h2>
+                <p>This transaction requires additional authentication due to elevated risk signals.</p>
+            </div>
+
+            <div class="modal-body">
+                <div class="risk-info">
+                    <div class="risk-score-display">
+                        <span class="risk-label">Risk Score</span>
+                        <span class="risk-value" id="modal-risk-score">45</span>
+                        <span class="risk-max">/100</span>
+                    </div>
+                    <div class="risk-factors" id="modal-risk-factors"></div>
+                </div>
+
+                <div class="verification-options">
+                    <h4>Choose verification method:</h4>
+                    <div class="verification-buttons">
+                        <button class="verify-btn" id="verify-3ds">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg>
+                            <span>3D Secure</span>
+                            <small>Bank verification</small>
+                        </button>
+                        <button class="verify-btn" id="verify-biometric">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 11c0 3.517-1.009 6.799-2.753 9.571" />
+                                <path
+                                    d="M4.458 14.543a11.952 11.952 0 0 1-.458-3.276c0-5.523 3.582-10 8-10s8 4.477 8 10c0 .956-.096 1.891-.28 2.793" />
+                                <path d="M12 11c0-2.21.895-4.21 2.343-5.657" />
+                            </svg>
+                            <span>Biometric</span>
+                            <small>Face ID / Touch ID</small>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="transaction-summary" id="modal-transaction"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-verification">Cancel Transaction</button>
+                <button class="btn btn-primary" id="confirm-verification">Verify & Pay</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Block Modal -->
+    <div class="modal-overlay" id="block-modal">
+        <div class="modal-content block-modal">
+            <div class="modal-header">
+                <div class="modal-icon error">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="15" y1="9" x2="9" y2="15" />
+                        <line x1="9" y1="9" x2="15" y2="15" />
+                    </svg>
+                </div>
+                <h2>Transaction Blocked</h2>
+                <p>This transaction has been blocked by Halo's risk engine for your protection.</p>
+            </div>
+
+            <div class="modal-body">
+                <div class="block-reason" id="block-reason"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="close-block-modal">Close</button>
+                <button class="btn btn-outline" id="appeal-block">Appeal Decision</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Processing Overlay -->
+    <div class="processing-overlay" id="processing-overlay">
+        <div class="processing-content">
+            <div class="processing-spinner"></div>
+            <p class="processing-text" id="processing-text">Processing payment...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

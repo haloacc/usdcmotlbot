@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Halo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="auth-style.css">
+    <link rel="stylesheet" href="css/halo-v3.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+
+<body>
+    <div style="display: flex; align-items: center; justify-content: center; min-height: 100vh; width: 100%;">
+        <div class="tech-form-box">
+            <!-- Corners handled by CSS pseudo-elements (Strict V3) -->
+
+            <!-- V3 Showcase Card (Centered) -->
+            <div style="margin-bottom: 40px;">
+                <div class="showcase-card">
+                    <div class="showcase-card__visual">
+                        <img src="images/showcase-visual.jpeg" alt="Agentic Intelligence" class="showcase-card__image">
+                    </div>
+                    <div class="showcase-card__content">
+                        <img src="images/green-logo-mark.png" alt="Halo Logo"
+                            style="width: auto; height: 64px; margin-bottom: 12px; object-fit: contain;">
+                        <div class="showcase-card__subtitle">Agentic Commerce</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single Google Sign-In Action -->
+            <div style="margin-bottom: 40px; position: relative;">
+                <div id="g_id_onload"
+                    data-client_id="555244343357-8o2bjud92h32uc5cc44qk0p4tkl8lfap.apps.googleusercontent.com"
+                    data-callback="handleGoogleSignIn" data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+                    data-text="continue_with" data-size="large" data-width="350" data-logo_alignment="center">
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <p
+                    style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em;">
+                    Secure • Encrypted • Agentic
+                </p>
+            </div>
+
+            <div class="error-message" id="error-message"
+                style="display: none; margin-top: 20px; padding: 12px; border: 1px solid var(--accent-gold); color: #8a6a1c; background: rgba(244, 211, 94, 0.1); font-family: var(--font-mono); font-size: 11px;">
+            </div>
+            <form id="login-form" style="display: none;"></form>
+        </div>
+    </div>
+
+    <script src="auth-api.js"></script>
+    <script src="login.js"></script>
+</body>
+
+</html>

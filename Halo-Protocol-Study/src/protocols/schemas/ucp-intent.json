@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Universal Checkout Protocol (UCP) Intent",
+  "description": "Schema for UCP checkout intents - unofficial schema based on Google's design patterns",
+  "type": "object",
+  "required": ["protocol", "intent"],
+  "properties": {
+    "protocol": {
+      "type": "string",
+      "const": "UCP"
+    },
+    "intent": {
+      "type": "object",
+      "required": ["action", "params"],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["buy", "pay", "checkout", "subscribe"]
+        },
+        "params": {
+          "type": "object",
+          "required": ["item", "amount", "currency"],
+          "properties": {
+            "item": {
+              "type": "string",
+              "description": "Item name or description"
+            },
+            "amount": {
+              "type": "number",
+              "description": "Amount in major currency units (e.g., dollars)",
+              "minimum": 0
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$",
+              "description": "ISO 4217 currency code"
+            },
+            "merchant": {
+              "type": "string",
+              "description": "Merchant identifier or name"
+            },
+            "quantity": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            },
+            "shipping_speed": {
+              "type": "string",
+              "enum": ["standard", "express", "instant", "overnight"]
+            },
+            "country": {
+              "type": "string",
+              "pattern": "^[A-Z]{2}$",
+              "description": "ISO 3166-1 alpha-2 country code"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Halo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .dashboard-scroll-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .user-details h2 {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+
+        .user-details p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .dashboard-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card h3 {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #111827;
+            margin: 0;
+        }
+
+        .payment-methods-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+
+        .payment-method-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .card-details h4 {
+            margin: 0 0 0.25rem 0;
+            font-size: 0.875rem;
+        }
+
+        .card-details p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 0.75rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            background: none;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .btn-icon:hover {
+            background: #f9fafb;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #6b7280;
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar (reuse from index.html) -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <img src="halo-logo.png" alt="Halo Logo" class="brand-logo-img" style="height: 40px; width: auto;">
+                </div>
+                <div class="brand-text">
+                    <span class="brand-name">Halo</span>
+                    <span class="brand-tagline">Agentic Commerce</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="/dashboard.html" class="nav-item active">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    </svg>
+                    <span>Settings</span>
+                </a>
+                <a href="/index.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    </svg>
+                    <span>💬 Chat</span>
+                </a>
+                <a href="#" class="nav-item" onclick="logout()">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                    </svg>
+                    <span>Logout</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="protocol-badges">
+                    <span class="badge badge-acp">ACP v2026</span>
+                    <span class="badge badge-ucp">UCP v1.0</span>
+                    <span class="badge badge-x402">x402</span>
+                </div>
+                <p class="footer-text">Powered by Stripe</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dashboard-scroll-wrapper">
+                <div class="dashboard-header">
+                    <div class="user-info">
+                        <div class="user-avatar" id="user-avatar">TU</div>
+                        <div class="user-details">
+                            <h2 id="user-name">Loading...</h2>
+                            <p id="user-email">test@halofy.ai</p>
+                        </div>
+                    </div>
+                    <div class="dashboard-actions">
+                        <button class="btn btn-secondary" onclick="editProfile()">Edit Profile</button>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <h3>Cards</h3>
+                        <p class="stat-value" id="stat-payment-methods">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Active Sessions</h3>
+                        <p class="stat-value" id="stat-sessions">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Completed Orders</h3>
+                        <p class="stat-value" id="stat-orders">0</p>
+                    </div>
+                </div>
+
+                <!-- Payment Methods Section -->
+                <div class="payment-methods-section">
+                    <div class="section-header">
+                        <h2>💳 Cards</h2>
+                        <button class="btn btn-primary" onclick="showAddPaymentModal();">
+                            <span>+ Add Card</span>
+                        </button>
+                    </div>
+                    <div id="payment-methods-list">
+                        <div class="empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                                <line x1="1" y1="10" x2="23" y2="10" />
+                            </svg>
+                            <p>No cards added yet</p>
+                            <button class="btn btn-primary" onclick="showAddPaymentModal()">Add Your First Card</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Crypto Wallets Section -->
+                <div class="payment-methods-section" style="margin-top: 2rem;">
+                    <div class="section-header">
+                        <h2>₿ Crypto Wallets</h2>
+                        <button class="btn btn-primary" onclick="connectWallet();">
+                            <span>+ Connect Wallet</span>
+                        </button>
+                    </div>
+                    <div id="crypto-wallets-list">
+                        <div class="empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                            </svg>
+                            <p>No crypto wallets connected</p>
+                            <button class="btn btn-primary" onclick="connectWallet()">Connect MetaMask or Web3
+                                Wallet</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UPI Section (Coming Soon) -->
+                <div class="payment-methods-section" style="margin-top: 2rem; opacity: 0.6; pointer-events: none;">
+                    <div class="section-header">
+                        <h2>🇮🇳 UPI & Digital Wallets</h2>
+                        <span class="badge" style="background: #f59e0b; color: white; padding: 0.25rem 0.75rem;">Coming
+                            Soon</span>
+                    </div>
+                    <div
+                        style="padding: 2rem; text-align: center; background: #f9fafb; border-radius: 8px; border: 2px dashed #d1d5db;">
+                        <p style="color: #6b7280; margin: 0;">🚀 UPI, Google Pay, PhonePe, and Paytm integration coming
+                            soon!</p>
+                        <p style="color: #9ca3af; font-size: 0.875rem; margin-top: 0.5rem;">Make instant payments with
+                            your favorite digital wallet</p>
+                    </div>
+                </div>
+
+            </div><!-- End dashboard-scroll-wrapper -->
+        </main>
+    </div>
+    <!-- End of app-container -->
+
+    <!-- Add Payment Method Modal -->
+    <div class="modal-overlay" id="add-payment-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Card</h2>
+                <button class="modal-close" onclick="hideAddPaymentModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-payment-form">
+                    <div class="form-group">
+                        <label>Card Number</label>
+                        <div style="position: relative;">
+                            <input type="text" id="card-number" maxlength="19" placeholder="4242 4242 4242 4242"
+                                required>
+                            <span id="card-brand-indicator"
+                                style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-weight: 600; font-size: 0.875rem;"></span>
+                        </div>
+                        <small id="card-validation-message"
+                            style="color: #ef4444; display: none; margin-top: 0.25rem;"></small>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiry Month</label>
+                            <input type="number" id="card-exp-month" min="1" max="12" placeholder="12" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Expiry Year</label>
+                            <input type="number" id="card-exp-year" min="2026" max="2050" placeholder="2028" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="text" id="card-cvv" maxlength="4" placeholder="123" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Cardholder Name</label>
+                        <input type="text" id="card-holder-name" placeholder="John Doe" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add Card</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Verify Payment Modal -->
+    <div class="modal-overlay" id="verify-payment-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Verify Payment Method</h2>
+            </div>
+            <div class="modal-body">
+                <p>Enter the 6-digit OTP sent to your phone/email:</p>
+                <form id="verify-payment-form">
+                    <div class="otp-inputs">
+                        <input type="text" class="otp-input" maxlength="1" pattern="\d">
+                        <input type="text" class="otp-input" maxlength="1" pattern="\d">
+                        <input type="text" class="otp-input" maxlength="1" pattern="\d">
+                        <input type="text" class="otp-input" maxlength="1" pattern="\d">
+                        <input type="text" class="otp-input" maxlength="1" pattern="\d">
+                        <input type="text" class="otp-input" maxlength="1" pattern="\d">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Verify</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth-api.js"></script>
+    <script>
+        let currentUser = null;
+        let pendingPaymentMethodId = null;
+
+        // Logout functionality
+        async function logout() {
+            try {
+                await haloAPI.logout();
+                window.location.href = '/login.html';
+            } catch (error) {
+                console.error('Logout failed:', error);
+                haloAPI.clearToken();
+                window.location.href = '/login.html';
+            }
+        }
+
+        // Card validation utilities
+        const CardValidator = {
+            // Luhn algorithm for card number validation
+            luhnCheck: function (cardNumber) {
+                const digits = cardNumber.replace(/\D/g, '');
+                let sum = 0;
+                let isEven = false;
+
+                for (let i = digits.length - 1; i >= 0; i--) {
+                    let digit = parseInt(digits[i]);
+
+                    if (isEven) {
+                        digit *= 2;
+                        if (digit > 9) {
+                            digit -= 9;
+                        }
+                    }
+
+                    sum += digit;
+                    isEven = !isEven;
+                }
+
+                return sum % 10 === 0;
+            },
+
+            // Detect card brand
+            detectBrand: function (cardNumber) {
+                const digits = cardNumber.replace(/\D/g, '');
+
+                // Visa: starts with 4
+                if (/^4/.test(digits)) {
+                    return { brand: 'visa', name: 'Visa', color: '#1434CB' };
+                }
+
+                // Mastercard: starts with 51-55 or 2221-2720
+                if (/^5[1-5]/.test(digits) || /^2(?:22[1-9]|2[3-9][0-9]|[3-6][0-9][0-9]|7[0-1][0-9]|720)/.test(digits)) {
+                    return { brand: 'mastercard', name: 'Mastercard', color: '#EB001B' };
+                }
+
+                // American Express: starts with 34 or 37
+                if (/^3[47]/.test(digits)) {
+                    return { brand: 'amex', name: 'American Express', color: '#006FCF' };
+                }
+
+                // Discover: starts with 6011, 622126-622925, 644-649, 65
+                if (/^6(?:011|5|4[4-9]|22(?:1(?:2[6-9]|[3-9][0-9])|[2-8][0-9]{2}|9(?:[01][0-9]|2[0-5])))/.test(digits)) {
+                    return { brand: 'discover', name: 'Discover', color: '#FF6000' };
+                }
+
+                return { brand: 'unknown', name: 'Card', color: '#6b7280' };
+            },
+
+            // Format card number with spaces
+            formatCardNumber: function (value) {
+                const digits = value.replace(/\D/g, '');
+                const brand = this.detectBrand(digits);
+
+                // Amex: 4-6-5 format
+                if (brand.brand === 'amex') {
+                    return digits.replace(/(\d{4})(\d{6})(\d{5})/, '$1 $2 $3').trim();
+                }
+
+                // Others: 4-4-4-4 format
+                return digits.replace(/(\d{4})/g, '$1 ').trim();
+            },
+
+            // Validate expiry date
+            validateExpiry: function (month, year) {
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                const currentMonth = now.getMonth() + 1;
+
+                if (month < 1 || month > 12) return false;
+                if (year < currentYear) return false;
+                if (year === currentYear && month < currentMonth) return false;
+
+                return true;
+            }
+        };
+
+        // Check auth on load
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!haloAPI.isAuthenticated()) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            try {
+                const response = await haloAPI.getCurrentUser();
+                currentUser = response.user;
+
+                // Check if email is verified
+                if (!currentUser.email_verified) {
+                    alert('⚠️ Please verify your email before accessing the dashboard. Check your inbox for the verification link.');
+                    window.location.href = '/login.html';
+                    return;
+                }
+
+                displayUserInfo();
+                await loadPaymentMethods();
+                await loadCryptoWallets();
+            } catch (error) {
+                console.error('Failed to load user:', error);
+                window.location.href = '/login.html';
+            }
+        });
+
+        function displayUserInfo() {
+            const initials = `${currentUser.first_name?.[0] || ''}${currentUser.last_name?.[0] || ''}`.toUpperCase() || 'U';
+            document.getElementById('user-avatar').textContent = initials;
+            document.getElementById('user-name').textContent = `${currentUser.first_name || ''} ${currentUser.last_name || ''}`.trim() || 'User';
+            document.getElementById('user-email').textContent = currentUser.email;
+        }
+
+        async function loadPaymentMethods() {
+            try {
+                const response = await haloAPI.getPaymentMethods();
+                const methods = response.payment_methods || [];
+
+                document.getElementById('stat-payment-methods').textContent = methods.length;
+
+                const container = document.getElementById('payment-methods-list');
+                if (methods.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                                <line x1="1" y1="10" x2="23" y2="10"/>
+                            </svg>
+                            <p>No cards added yet</p>
+                            <button class="btn btn-primary" onclick="showAddPaymentModal()">Add Your First Card</button>
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = methods.map(pm => {
+                        const brandInfo = getCardBrandInfo(pm.card_brand);
+                        return `
+                        <div class="payment-method-card">
+                            <div class="card-info">
+                                <div class="card-icon" style="background: ${brandInfo.color}; color: white; font-weight: 700; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.875rem;">
+                                    ${brandInfo.name}
+                                </div>
+                                <div class="card-details">
+                                    <h4>•••• ${pm.card_last4}</h4>
+                                    <p>Expires ${pm.card_exp_month}/${pm.card_exp_year} • ${pm.verified ? '✓ Verified' : '⚠ Pending'}</p>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                ${pm.is_default ? '<span class="badge" style="background:#10b981;color:white;">Default</span>' : `<button class="btn-icon" onclick="setDefault('${pm.id}')">Set Default</button>`}
+                                <button class="btn-icon" onclick="removePaymentMethod('${pm.id}')">Remove</button>
+                            </div>
+                        </div>
+                    `;
+                    }).join('');
+                }
+            } catch (error) {
+                console.error('Failed to load payment methods:', error);
+            }
+        }
+
+        function getCardBrandInfo(brand) {
+            const brandLower = brand.toLowerCase();
+            const brandMap = {
+                'visa': { name: 'VISA', color: '#1434CB' },
+                'mastercard': { name: 'MASTERCARD', color: '#EB001B' },
+                'amex': { name: 'AMEX', color: '#006FCF' },
+                'american express': { name: 'AMEX', color: '#006FCF' },
+                'discover': { name: 'DISCOVER', color: '#FF6000' },
+                'unknown': { name: 'CARD', color: '#6b7280' }
+            };
+            return brandMap[brandLower] || brandMap['unknown'];
+        }
+
+        function showAddPaymentModal() {
+            console.log('showAddPaymentModal called');
+            const modal = document.getElementById('add-payment-modal');
+            console.log('Modal element:', modal);
+            if (modal) {
+                console.log('Adding active class');
+                modal.classList.add('active');
+                console.log('Active class added, modal classes:', modal.className);
+            } else {
+                console.error('Modal not found!');
+            }
+            // Setup card number validation
+            setupCardValidation();
+        }
+
+        function hideAddPaymentModal() {
+            document.getElementById('add-payment-modal').classList.remove('active');
+            document.getElementById('add-payment-form').reset();
+            document.getElementById('card-brand-indicator').textContent = '';
+            document.getElementById('card-validation-message').style.display = 'none';
+        }
+
+        function setupCardValidation() {
+            const cardNumberInput = document.getElementById('card-number');
+            const brandIndicator = document.getElementById('card-brand-indicator');
+            const validationMessage = document.getElementById('card-validation-message');
+
+            cardNumberInput.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, '');
+
+                // Limit to 16 digits (19 with spaces) or 15 for Amex
+                const brand = CardValidator.detectBrand(value);
+                const maxLength = brand.brand === 'amex' ? 15 : 16;
+                value = value.slice(0, maxLength);
+
+                // Format and update input
+                e.target.value = CardValidator.formatCardNumber(value);
+
+                // Update brand indicator
+                if (value.length >= 4) {
+                    brandIndicator.textContent = brand.name;
+                    brandIndicator.style.color = brand.color;
+                } else {
+                    brandIndicator.textContent = '';
+                }
+
+                // Validate card number
+                if (value.length >= 13) {
+                    const isValid = CardValidator.luhnCheck(value);
+                    if (!isValid) {
+                        validationMessage.textContent = 'Invalid card number';
+                        validationMessage.style.display = 'block';
+                        cardNumberInput.style.borderColor = '#ef4444';
+                    } else {
+                        validationMessage.style.display = 'none';
+                        cardNumberInput.style.borderColor = '#10b981';
+                    }
+                } else {
+                    validationMessage.style.display = 'none';
+                    cardNumberInput.style.borderColor = '';
+                }
+            });
+        }
+
+        document.getElementById('add-payment-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const cardNumber = document.getElementById('card-number').value.replace(/\s/g, '');
+            const expMonth = parseInt(document.getElementById('card-exp-month').value);
+            const expYear = parseInt(document.getElementById('card-exp-year').value);
+
+            // Validate card number
+            if (!CardValidator.luhnCheck(cardNumber)) {
+                alert('Invalid card number. Please check and try again.');
+                return;
+            }
+
+            // Validate expiry
+            if (!CardValidator.validateExpiry(expMonth, expYear)) {
+                alert('Card has expired or invalid expiry date.');
+                return;
+            }
+
+            const cardData = {
+                card_number: cardNumber,
+                card_holder_name: document.getElementById('card-holder-name').value,
+                card_exp_month: expMonth,
+                card_exp_year: expYear,
+                card_cvv: document.getElementById('card-cvv').value,
+            };
+
+            try {
+                const response = await haloAPI.addPaymentMethod(cardData);
+                pendingPaymentMethodId = response.payment_method.id;
+                hideAddPaymentModal();
+                document.getElementById('verify-payment-modal').classList.add('active');
+            } catch (error) {
+                alert('Failed to add payment method: ' + error.message);
+            }
+        });
+
+        document.getElementById('verify-payment-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const otpInputs = document.querySelectorAll('#verify-payment-modal .otp-input');
+            const otp = Array.from(otpInputs).map(input => input.value).join('');
+
+            try {
+                await haloAPI.verifyPaymentMethod(pendingPaymentMethodId, otp);
+                document.getElementById('verify-payment-modal').classList.remove('active');
+                await loadPaymentMethods();
+                alert('Payment method added successfully!');
+            } catch (error) {
+                alert('Verification failed: ' + error.message);
+            }
+        });
+
+        async function setDefault(id) {
+            try {
+                await haloAPI.setDefaultPaymentMethod(id);
+                await loadPaymentMethods();
+            } catch (error) {
+                alert('Failed to set default: ' + error.message);
+            }
+        }
+
+        async function removePaymentMethod(id) {
+            if (!confirm('Remove this payment method?')) return;
+
+            try {
+                await haloAPI.removePaymentMethod(id);
+                await loadPaymentMethods();
+            } catch (error) {
+                alert('Failed to remove: ' + error.message);
+            }
+        }
+
+        // Crypto wallet functionality
+        let connectedWallet = null;
+
+        async function loadCryptoWallets() {
+            try {
+                const response = await haloAPI.getCryptoWallets();
+                const wallets = response.wallets || [];
+
+                const container = document.getElementById('crypto-wallets-list');
+                if (wallets.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                            </svg>
+                            <p>No crypto wallets connected</p>
+                            <button class="btn btn-primary" onclick="connectWallet()">Connect MetaMask or Web3 Wallet</button>
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = wallets.map(wallet => {
+                        const shortAddress = `${wallet.address.slice(0, 6)}...${wallet.address.slice(-4)}`;
+                        return `
+                        <div class="payment-method-card">
+                            <div class="card-info">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; font-weight: 700; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.875rem;">
+                                    ${wallet.wallet_type}
+                                </div>
+                                <div class="card-details">
+                                    <h4>${shortAddress}</h4>
+                                    <p>${wallet.network_name} • ✓ Connected</p>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                ${wallet.is_default ? '<span class="badge" style="background:#10b981;color:white;">Default</span>' : `<button class="btn-icon" onclick="setDefaultWallet('${wallet.id}')">Set Default</button>`}
+                                <button class="btn-icon" onclick="removeCryptoWallet('${wallet.id}')">Remove</button>
+                            </div>
+                        </div>
+                    `;
+                    }).join('');
+                }
+            } catch (error) {
+                console.error('Failed to load crypto wallets:', error);
+            }
+        }
+
+        async function connectWallet() {
+            try {
+                // Check if MetaMask or other Web3 wallet is available
+                if (typeof window.ethereum === 'undefined') {
+                    alert('No crypto wallet detected. Please install MetaMask, Coinbase Wallet, or another Web3 wallet extension.');
+                    window.open('https://metamask.io/download/', '_blank');
+                    return;
+                }
+
+                // Request account access
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const walletAddress = accounts[0];
+
+                // Get network information
+                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                const networkName = getNetworkName(chainId);
+
+                const walletData = {
+                    address: walletAddress,
+                    wallet_type: getWalletType(),
+                    chain_id: chainId,
+                    network_name: networkName,
+                };
+
+                // Save to backend
+                const response = await haloAPI.addCryptoWallet(walletData);
+                connectedWallet = response.wallet;
+
+                // Reload wallets list
+                await loadCryptoWallets();
+
+                console.log('Connected wallet:', connectedWallet);
+                alert('Wallet connected successfully!');
+
+
+            } catch (error) {
+                console.error('Wallet connection error:', error);
+                if (error.code === 4001) {
+                    alert('Wallet connection cancelled');
+                } else {
+                    alert('Failed to connect wallet: ' + error.message);
+                }
+            }
+        }
+
+        function getWalletType() {
+            if (window.ethereum.isMetaMask) return 'MetaMask';
+            if (window.ethereum.isCoinbaseWallet) return 'Coinbase Wallet';
+            if (window.ethereum.isRabby) return 'Rabby';
+            return 'Web3 Wallet';
+        }
+
+        function getNetworkName(chainId) {
+            const networks = {
+                '0x1': 'Ethereum Mainnet',
+                '0x5': 'Goerli Testnet',
+                '0x89': 'Polygon',
+                '0xa': 'Optimism',
+                '0xa4b1': 'Arbitrum',
+                '0x2105': 'Base',
+                '0x14a34': 'Base Sepolia',
+            };
+            return networks[chainId] || `Unknown (${chainId})`;
+        }
+
+        async function removeCryptoWallet(walletId) {
+            if (!confirm('Are you sure you want to remove this wallet?')) return;
+
+            try {
+                await haloAPI.removeCryptoWallet(walletId);
+                await loadCryptoWallets();
+            } catch (error) {
+                alert('Failed to remove wallet: ' + error.message);
+            }
+        }
+
+        async function setDefaultWallet(walletId) {
+            try {
+                await haloAPI.setDefaultCryptoWallet(walletId);
+                await loadCryptoWallets();
+            } catch (error) {
+                alert('Failed to set default: ' + error.message);
+            }
+        }
+
+        // Listen for account changes
+        if (typeof window.ethereum !== 'undefined') {
+            window.ethereum.on('accountsChanged', (accounts) => {
+                if (accounts.length === 0) {
+                    // Wallet disconnected, reload the list
+                    loadCryptoWallets();
+                } else {
+                    // Account changed, reload the list
+                    loadCryptoWallets();
+                }
+            });
+
+            window.ethereum.on('chainChanged', () => {
+                // Network changed, reload page
+                window.location.reload();
+            });
+        }
+
+        async function logout() {
+            try {
+                await haloAPI.logout();
+                window.location.href = '/login.html';
+            } catch (error) {
+                haloAPI.clearToken();
+                window.location.href = '/login.html';
+            }
+        }
+
+        function editProfile() {
+            // TODO: Implement profile editing
+            alert('Profile editing coming soon!');
+        }
+    </script>
+</body>
+
+</html>

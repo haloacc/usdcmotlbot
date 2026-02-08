@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "x402 Payment Payload",
+  "description": "Official x402 v2 PaymentPayload schema - client's payment authorization",
+  "type": "object",
+  "required": ["x402Version", "resource", "accepted", "payload"],
+  "properties": {
+    "x402Version": {
+      "type": "number",
+      "const": 2,
+      "description": "Protocol version identifier (must be 2 for v2)"
+    },
+    "resource": {
+      "type": "object",
+      "required": ["url", "description", "mimeType"],
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the protected resource"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the resource"
+        },
+        "mimeType": {
+          "type": "string",
+          "description": "MIME type of the expected response"
+        }
+      }
+    },
+    "accepted": {
+      "type": "object",
+      "required": ["scheme", "network", "asset", "amount", "payTo", "maxTimeoutSeconds", "extra"],
+      "description": "The specific payment requirement the client is fulfilling",
+      "properties": {
+        "scheme": {
+          "type": "string",
+          "description": "Payment scheme identifier (e.g., 'exact')"
+        },
+        "network": {
+          "type": "string",
+          "description": "Blockchain network identifier in CAIP-2 format (e.g., 'eip155:84532')"
+        },
+        "asset": {
+          "type": "string",
+          "description": "Token contract address or ISO 4217 currency code for fiat"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Required payment amount in atomic token units"
+        },
+        "payTo": {
+          "type": "string",
+          "description": "Recipient wallet address or role constant"
+        },
+        "maxTimeoutSeconds": {
+          "type": "number",
+          "description": "Maximum time allowed for payment completion"
+        },
+        "extra": {
+          "type": "object",
+          "description": "Scheme-specific additional information"
+        }
+      }
+    },
+    "payload": {
+      "type": "object",
+      "description": "Scheme-specific payment authorization data (e.g., signed transaction)"
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Protocol extensions data echoed from PaymentRequired"
+    }
+  }
+}

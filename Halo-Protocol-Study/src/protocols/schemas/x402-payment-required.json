@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "x402 Payment Required Response",
+  "description": "Official x402 v2 PaymentRequired schema based on Coinbase x402 specification",
+  "type": "object",
+  "required": ["x402Version", "resource", "accepts"],
+  "properties": {
+    "x402Version": {
+      "type": "number",
+      "const": 2,
+      "description": "Protocol version identifier (must be 2 for v2)"
+    },
+    "error": {
+      "type": "string",
+      "description": "Human-readable error message explaining why payment is required"
+    },
+    "resource": {
+      "type": "object",
+      "required": ["url", "description", "mimeType"],
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the protected resource"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the resource"
+        },
+        "mimeType": {
+          "type": "string",
+          "description": "MIME type of the expected response"
+        }
+      }
+    },
+    "accepts": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Array of payment requirement objects defining acceptable payment methods",
+      "items": {
+        "type": "object",
+        "required": ["scheme", "network", "asset", "amount", "payTo", "maxTimeoutSeconds", "extra"],
+        "properties": {
+          "scheme": {
+            "type": "string",
+            "description": "Payment scheme identifier (e.g., 'exact')"
+          },
+          "network": {
+            "type": "string",
+            "description": "Blockchain network identifier in CAIP-2 format (e.g., 'eip155:84532')"
+          },
+          "asset": {
+            "type": "string",
+            "description": "Token contract address or ISO 4217 currency code for fiat"
+          },
+          "amount": {
+            "type": "string",
+            "description": "Required payment amount in atomic token units"
+          },
+          "payTo": {
+            "type": "string",
+            "description": "Recipient wallet address or role constant (e.g., 'merchant')"
+          },
+          "maxTimeoutSeconds": {
+            "type": "number",
+            "description": "Maximum time allowed for payment completion"
+          },
+          "extra": {
+            "type": "object",
+            "description": "Scheme-specific additional information"
+          }
+        }
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Protocol extensions data for optional functionality"
+    }
+  }
+}
