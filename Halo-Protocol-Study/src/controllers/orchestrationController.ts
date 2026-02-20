@@ -57,7 +57,7 @@ export class OrchestrationController {
         merchantProtocol,
         merchantContext,
         autoDetect: true,
-      });
+      }, req.ip);
 
       if (!result.success) {
         res.status(400).json({
@@ -106,7 +106,7 @@ export class OrchestrationController {
         merchantProtocol,
         merchantContext,
         autoDetect: false,
-      });
+      }, req.ip);
 
       if (!result.success) {
         res.status(400).json({
@@ -257,7 +257,7 @@ export class OrchestrationController {
           merchantName: parsedPrompt.merchantName || 'Demo Merchant',
           merchantId: 'demo_merchant',
         },
-      });
+      }, req.ip);
 
       if (!result.success) {
         res.status(400).json({
@@ -364,7 +364,7 @@ export class OrchestrationController {
           merchantName: parsedPrompt.merchantName || 'Demo Merchant',
           merchantId: 'demo_merchant',
         },
-      });
+      }, req.ip);
 
       if (!checkoutResult.success) {
         res.status(400).json({ error: checkoutResult.error });

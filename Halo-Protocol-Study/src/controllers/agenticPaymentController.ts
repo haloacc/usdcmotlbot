@@ -1,8 +1,3 @@
-/**
- * Agentic Payment Controller
- * Orchestrates the full flow: prompt → ACP REQUEST → (merchant) → ACP RESPONSE → normalize → risk → decision → payment
- */
-
 import { Request, Response } from 'express';
 import { parsePrompt } from '../services/promptParser';
 import { buildACPCreateRequest } from '../services/acpBuilder';
@@ -12,6 +7,7 @@ import { normalizePayload } from '../services/normalizer';
 import { computeRiskScore } from '../services/riskEngine';
 import { createPaymentIntent } from '../services/stripeService';
 import { paymentProcessor, PaymentProcessor } from '../services/paymentProcessor';
+import logger from '../utils/logger';
 import {
   DelegatePaymentRequest,
   CardPaymentMethod,
@@ -57,11 +53,11 @@ export async function processAgenticPayment(
 
     // Step 1: Parse natural language prompt
     const parsedPrompt = parsePrompt(prompt);
-    console.log('📝 Parsed prompt:', parsedPrompt);
+    logger.info(`📝 Parsed prompt: ${JSON.stringify(parsedPrompt)}`);
 
     // Step 2: Build minimal ACP CREATE REQUEST
     const { itemId, request: acpCreateRequest } = buildACPCreateRequest(parsedPrompt);
-    console.log('📤 ACP CREATE REQUEST:', acpCreateRequest);
+    logger.info(`📤 ACP CREATE REQUEST: ${JSON.stringify(acpCreateRequest)}`);
 
     // Step 3: Merchant simulates response (in production, this would be a real merchant endpoint)
     const acpCreateResponse = merchantSimulateCheckoutResponse(
@@ -71,19 +67,19 @@ export async function processAgenticPayment(
       parsedPrompt.country,
       parsedPrompt.shipping_speed
     );
-    console.log('📥 ACP CREATE RESPONSE:', acpCreateResponse.id);
+    logger.info(`📥 ACP CREATE RESPONSE: ${acpCreateResponse.id}`);
 
     // Step 4: Halo receives and parses the merchant's ACP response
     const parsedACP = parseACP(acpCreateResponse);
-    console.log('🔍 Halo parsed ACP data:', parsedACP);
+    logger.info(`🔍 Halo parsed ACP data: ${JSON.stringify(parsedACP)}`);
 
     // Step 5: Normalize for internal processing
     const normalizedPayload = normalizePayload(parsedACP);
-    console.log('✨ Normalized payload:', normalizedPayload);
+    logger.info(`✨ Normalized payload: ${JSON.stringify(normalizedPayload)}`);
 
     // Step 6: Run risk scoring
-    const riskResult = computeRiskScore(normalizedPayload);
-    console.log('⚠️ Risk assessment:', riskResult);
+    const riskResult = computeRiskScore(normalizedPayload, req.ip);
+    logger.info(`⚠️ Risk assessment: ${JSON.stringify(riskResult)}`);
 
     // Step 7: Conditional Stripe integration (only on APPROVE)
     let payment_intent_id: string | undefined;
@@ -91,7 +87,7 @@ export async function processAgenticPayment(
       const paymentIntent = await createPaymentIntent(normalizedPayload);
       if (paymentIntent) {
         payment_intent_id = paymentIntent.id;
-        console.log('💳 Stripe PaymentIntent created:', payment_intent_id);
+        logger.info(`💳 Stripe PaymentIntent created: ${payment_intent_id}`);
       }
     }
 
@@ -107,7 +103,7 @@ export async function processAgenticPayment(
       checkout_session: acpCreateResponse, // For backwards compatibility with tests
     });
   } catch (error) {
-    console.error('❌ Error processing agentic payment:', error);
+    logger.error(`❌ Error processing agentic payment: ${error}`);
     return res.status(500).json({
       success: false,
       decision: 'block',
@@ -165,13 +161,13 @@ export async function processCompletePayment(
     }
 
     // ========== STEP 1: AGENTIC CHECKOUT (Schema 1) ==========
-    console.log('🛒 Starting Agentic Checkout...');
+    logger.info('🛒 Starting Agentic Checkout...');
 
     const parsedPrompt = parsePrompt(prompt);
-    console.log('📝 Parsed prompt:', parsedPrompt);
+    logger.info(`📝 Parsed prompt: ${JSON.stringify(parsedPrompt)}`);
 
     const { itemId, request: acpCreateRequest } = buildACPCreateRequest(parsedPrompt);
-    console.log('📤 ACP CREATE REQUEST:', acpCreateRequest);
+    logger.info(`📤 ACP CREATE REQUEST: ${JSON.stringify(acpCreateRequest)}`);
 
     const acpCreateResponse = merchantSimulateCheckoutResponse(
       acpCreateRequest,
@@ -180,16 +176,16 @@ export async function processCompletePayment(
       parsedPrompt.country,
       parsedPrompt.shipping_speed
     );
-    console.log('📥 ACP CREATE RESPONSE (checkout_session_id):', acpCreateResponse.id);
+    logger.info(`📥 ACP CREATE RESPONSE (checkout_session_id): ${acpCreateResponse.id}`);
 
     const parsedACP = parseACP(acpCreateResponse);
     const normalizedPayload = normalizePayload(parsedACP);
-    console.log('✨ Normalized payload:', normalizedPayload);
+    logger.info(`✨ Normalized payload: ${JSON.stringify(normalizedPayload)}`);
 
     // ========== STEP 2: HALO RISK EVALUATION ==========
-    console.log('⚠️ Running Halo risk evaluation...');
-    const riskResult = computeRiskScore(normalizedPayload);
-    console.log(`🎯 Risk Decision: ${riskResult.decision} (score: ${riskResult.risk_score})`);
+    logger.info('⚠️ Running Halo risk evaluation...');
+    const riskResult = computeRiskScore(normalizedPayload, req.ip);
+    logger.info(`🎯 Risk Decision: ${riskResult.decision} (score: ${riskResult.risk_score})`);
 
     // If blocked, stop here
     if (riskResult.decision === 'block') {
@@ -206,7 +202,7 @@ export async function processCompletePayment(
     }
 
     // ========== STEP 3: DELEGATE PAYMENT (Schema 3) ==========
-    console.log('💳 Processing delegate payment with card...');
+    logger.info('💳 Processing delegate payment with card...');
 
     // Convert Halo risk signals to ACP risk signals
     const riskSignals = PaymentProcessor.convertHaloToRiskSignals(
@@ -240,7 +236,7 @@ export async function processCompletePayment(
 
     // Check if payment succeeded
     if ('id' in paymentResult) {
-      console.log('✅ Payment succeeded:', paymentResult.id);
+      logger.info(`✅ Payment succeeded: ${paymentResult.id}`);
       return res.status(200).json({
         success: true,
         decision: riskResult.decision,
@@ -252,7 +248,7 @@ export async function processCompletePayment(
         normalized_payload: normalizedPayload,
       });
     } else {
-      console.log('❌ Payment failed:', paymentResult.message);
+      logger.error(`❌ Payment failed: ${paymentResult.message}`);
       return res.status(200).json({
         success: false,
         decision: riskResult.decision,
@@ -267,7 +263,7 @@ export async function processCompletePayment(
     }
 
   } catch (error) {
-    console.error('❌ Error processing complete payment:', error);
+    logger.error(`❌ Error processing complete payment: ${error}`);
     return res.status(500).json({
       success: false,
       decision: 'block',

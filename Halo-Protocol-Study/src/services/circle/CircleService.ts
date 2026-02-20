@@ -1,3 +1,5 @@
+import logger from '../../utils/logger';
+
 /**
  * Circle & Arc Service
  * Integration for Circle's Arc (The Economic OS for the internet)
@@ -36,7 +38,7 @@ export class CircleArcService {
    * Create an agent wallet on the Arc blockchain
    */
   public async createArcAgentWallet(name: string): Promise<ArcWallet> {
-    console.log(`🌀 [ARC] Initializing Economic OS identity for agent: ${name}`);
+    logger.info(`🌀 [ARC] Initializing Economic OS identity for agent: ${name}`);
     return {
       id: `arc_wal_${Math.random().toString(36).substr(2, 9)}`,
       address: `0x${this.generateRandomHex(40)}`,
@@ -53,8 +55,8 @@ export class CircleArcService {
     destinationAddress: string,
     amount: number
   ): Promise<ArcEconomicTransition> {
-    console.log(`💎 [ARC] Executing Economic Transition: ${amount} USDC on Arc Circle's Chain`);
-    console.log(`🔗 [CCTP] Ensuring cross-chain liquidity for transaction...`);
+    logger.info(`💎 [ARC] Executing Economic Transition: ${amount} USDC on Arc Circle's Chain`);
+    logger.info(`🔗 [CCTP] Ensuring cross-chain liquidity for transaction...`);
     
     const amountStr = amount.toFixed(2);
     const txHash = `0x${this.generateRandomHex(64)}`;
@@ -81,13 +83,13 @@ export class CircleArcService {
    * Ensures the Economic OS has a verifiable but private record of the transition
    */
   public async postEncryptedEconomicState(transition: ArcEconomicTransition): Promise<void> {
-    console.log(`🔒 [ARC] Encrypting transaction data for ${transition.id}...`);
+    logger.info(`🔒 [ARC] Encrypting transaction data for ${transition.id}...`);
     
     // Simulate encryption of sensitive data (item, buyer info, etc.)
     const encryptedData = `enc_${this.generateRandomHex(128)}`;
     
-    console.log(`📝 [ARC] Posting state transition to Arc Circles Chain: ${transition.txHash}`);
-    console.log(`✅ [ARC] Registry Updated: Encrypted intent data anchored to blockchain.`);
+    logger.info(`📝 [ARC] Posting state transition to Arc Circles Chain: ${transition.txHash}`);
+    logger.info(`✅ [ARC] Registry Updated: Encrypted intent data anchored to blockchain.`);
   }
 
   private generateRandomHex(length: number): string {

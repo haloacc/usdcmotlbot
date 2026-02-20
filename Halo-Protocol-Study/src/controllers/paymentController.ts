@@ -6,9 +6,10 @@ import { createPaymentIntent } from '../services/stripeService';
 import { ACPCheckoutSession } from '../types/index';
 import Stripe from 'stripe';
 import { paymentMethods } from '../services/paymentMethodService';
+import logger from '../utils/logger';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || process.env.STRIPE_API_KEY || '', {
-    apiVersion: '2020-08-27',
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || process.env.STRIPE_API_KEY || 'sk_test_mock', {
+    apiVersion: '2025-01-27.acacia' as any,
 });
 
 export class PaymentController {
@@ -28,11 +29,11 @@ export class PaymentController {
             const normalizedData = normalizePayload(parsedData);
 
             // Compute risk score
-            const { risk_score, decision } = computeRiskScore(normalizedData);
+            const { risk_score, decision } = computeRiskScore(normalizedData, req.ip);
 
             // If approved, create Economic Transition record (Arc Blockchain)
             if (decision === 'approve') {
-                console.log(`💎 [ARC] ACP Request Approved. Initializing Circle Arc Economic Transition...`);
+                logger.info(`💎 [ARC] ACP Request Approved. Initializing Circle Arc Economic Transition...`);
                 // For direct ACP flow, we still use Stripe for legacy compatibility but record intent for Arc
                 await createPaymentIntent(normalizedData);
             }
@@ -43,7 +44,7 @@ export class PaymentController {
                 normalized_payload: normalizedData
             });
         } catch (error) {
-            console.error('Error processing ACP:', error);
+            logger.error(`Error processing ACP: ${error}`);
             return res.status(500).json({ error: 'An error occurred while processing the payment.' });
         }
     }

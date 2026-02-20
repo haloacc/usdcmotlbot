@@ -97,7 +97,8 @@ export class ProtocolRouter {
    */
   public async orchestrate(
     agentRequest: any,
-    options: OrchestrationOptions
+    options: OrchestrationOptions,
+    ip?: string
   ): Promise<OrchestrationResult> {
     this.ensureInitialized();
 
@@ -146,7 +147,8 @@ export class ProtocolRouter {
       // Step 6: Process canonical request (business logic)
       const canonicalResponse = await this.processCanonicalRequest(
         canonicalRequest,
-        options.merchantContext
+        options.merchantContext,
+        ip
       );
 
       // Step 7: Validate merchant response
@@ -196,7 +198,8 @@ export class ProtocolRouter {
    */
   private async processCanonicalRequest(
     request: CanonicalCheckoutRequest | CanonicalPaymentRequest,
-    merchantContext?: any
+    merchantContext?: any,
+    ip?: string
   ): Promise<CanonicalCheckoutSession | CanonicalPaymentResponse> {
     // Import services
     const { RiskEngine } = require('../services/riskEngine');
@@ -208,7 +211,7 @@ export class ProtocolRouter {
     if (isPaymentRequest) {
       return this.processPayment(request as CanonicalPaymentRequest, merchantContext);
     } else {
-      return this.processCheckout(request as CanonicalCheckoutRequest, merchantContext);
+      return this.processCheckout(request as CanonicalCheckoutRequest, merchantContext, ip);
     }
   }
 
@@ -218,7 +221,8 @@ export class ProtocolRouter {
    */
   private async processCheckout(
     request: CanonicalCheckoutRequest,
-    merchantContext?: any
+    merchantContext?: any,
+    ip?: string
   ): Promise<CanonicalCheckoutSession> {
     const { computeRiskScore } = require('../services/riskEngine');
     const { generateSellerCapabilities } = require('../services/capabilityNegotiator');
@@ -247,7 +251,7 @@ export class ProtocolRouter {
       }
     };
     
-    const riskResult = computeRiskScore(normalizedForRisk);
+    const riskResult = computeRiskScore(normalizedForRisk, ip);
     console.log(`⚠️ [HALO] Risk Evaluation: score=${riskResult.risk_score}, decision=${riskResult.decision}`);
 
     // Note: We NO longer throw here - let the calling code handle block/challenge decisions
@@ -310,8 +314,8 @@ export class ProtocolRouter {
     if (process.env.STRIPE_SECRET_KEY && process.env.STRIPE_SECRET_KEY.length > 20) {
       try {
         const Stripe = require('stripe');
-        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-          apiVersion: '2023-10-16',
+        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_mock', {
+          apiVersion: '2025-01-27.acacia',
         });
 
         console.log('🌟 [HALO] Creating Stripe Checkout Session...');

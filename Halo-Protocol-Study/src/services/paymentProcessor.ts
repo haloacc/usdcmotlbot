@@ -7,11 +7,11 @@ import {
   RiskSignal
 } from '../types';
 
-const MOCK_MODE = true; // Force mock mode for reliable demo
+const MOCK_MODE = false; // Disable mock mode for final production readiness review
 // const MOCK_MODE = !process.env.STRIPE_SECRET_KEY || process.env.STRIPE_SECRET_KEY.length < 20;
 
-const stripe = MOCK_MODE ? null : new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2020-08-27'
+const stripe = MOCK_MODE ? null : new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_mock', {
+  apiVersion: '2025-01-27.acacia' as any
 });
 
 console.log(`💳 Payment Processor Mode: ${MOCK_MODE ? 'MOCK (no real charges)' : 'LIVE (Stripe API)'}`);

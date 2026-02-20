@@ -1,9 +1,9 @@
 import Stripe from 'stripe';
 
 // Support both STRIPE_API_KEY and STRIPE_SECRET_KEY for flexibility
-const stripeKey = process.env.STRIPE_API_KEY || process.env.STRIPE_SECRET_KEY || '';
+const stripeKey = process.env.STRIPE_API_KEY || process.env.STRIPE_SECRET_KEY || 'sk_test_mock';
 const stripe = new Stripe(stripeKey, {
-  apiVersion: '2020-08-27',
+  apiVersion: '2025-01-27.acacia' as any,
 });
 
 export const createPaymentIntent = async (normalizedPayload: any): Promise<any | null> => {

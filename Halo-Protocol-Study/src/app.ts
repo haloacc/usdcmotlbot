@@ -2,6 +2,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import logger from './utils/logger';
 import paymentController from './controllers/paymentController';
 import { processAgenticPayment, processCompletePayment } from './controllers/agenticPaymentController';
 import { OrchestrationController } from './controllers/orchestrationController';
@@ -9,17 +12,31 @@ import protocolController from './controllers/protocolController';
 import { validateACP } from './middleware/validation';
 import { authController } from './controllers/authController';
 import { userController } from './controllers/userController';
+import { body, validationResult } from 'express-validator';
 import { paymentMethodController } from './controllers/paymentMethodController';
 import { cryptoWalletController } from './controllers/cryptoWalletController';
 import { OauthController } from './controllers/oauthController';
 import merchantApiController from './controllers/merchantApiController';
+
 const oauthController = new OauthController();
 
 const app = express();
 
-// Middleware
+// Security Middleware
+app.use(helmet());
 app.use(cors());
 app.use(bodyParser.json());
+
+// Rate Limiting
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    message: { success: false, error: 'Too many requests, please try again later.' },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+app.use('/api/', limiter);
+app.use('/halo/', limiter);
 
 // Request Logger for debugging
 app.use((req, res, next) => {
@@ -27,11 +44,16 @@ app.use((req, res, next) => {
 
     res.send = function (body: any) {
         if (res.statusCode >= 400) {
-            console.log(`[Backend API] ${req.method} ${req.path} -> ${res.statusCode}`);
-            try {
-                const bodyStr = typeof body === 'object' ? JSON.stringify(body) : body;
-                console.log(`[Backend API] Response Body: ${bodyStr}`);
-            } catch (e) { }
+            logger.error(`[Backend API] ${req.method} ${req.path} -> ${res.statusCode}`);
+            // Don't log sensitive response bodies in production
+            if (process.env.NODE_ENV !== 'production') {
+                try {
+                    const bodyStr = typeof body === 'object' ? JSON.stringify(body) : body;
+                    logger.debug(`[Backend API] Response Body: ${bodyStr}`);
+                } catch (e) { }
+            }
+        } else {
+            logger.http(`[Backend API] ${req.method} ${req.path} -> ${res.statusCode}`);
         }
         return originalSend.apply(res, [body] as any);
     } as any;
@@ -47,7 +69,20 @@ const orchestrationController = new OrchestrationController();
 // ========== Authentication & User Management Endpoints ==========
 
 // Auth endpoints
-app.post('/api/auth/signup', (req, res) => authController.signup(req, res));
+app.post('/api/auth/signup', 
+    body('email').isEmail().normalizeEmail(),
+    body('password').isLength({ min: 8 }),
+    body('first_name').trim().notEmpty(),
+    body('last_name').trim().notEmpty(),
+    (req: any, res: any, next: any) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ success: false, errors: errors.array() });
+        }
+        next();
+    },
+    (req: any, res: any) => authController.signup(req, res)
+);
 app.post('/api/auth/send-otp', (req, res) => authController.sendOTPBeforeSignup(req, res));
 app.post('/api/auth/login', (req, res) => authController.login(req, res));
 app.get('/api/auth/verify-email', (req, res) => authController.verifyEmail(req, res)); // Email link
@@ -56,6 +91,16 @@ app.post('/api/auth/verify-mobile', (req, res) => authController.verifyMobile(re
 app.post('/api/auth/resend-otp', (req, res) => authController.resendOTP(req, res));
 app.post('/api/auth/logout', (req, res) => authController.logout(req, res));
 app.get('/api/auth/me', (req, res) => authController.getCurrentUser(req, res));
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.json({
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        version: process.env.npm_package_version || '1.0.0',
+        env: process.env.NODE_ENV || 'development'
+    });
+});
 
 // User profile endpoints
 app.get('/api/users/profile', (req, res) => userController.getProfile(req, res));
@@ -211,5 +256,21 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/auth/google', (req, res) => oauthController.googleSignIn(req, res));
+
+// Global Error Handler
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    console.error('[Global Error Handler]', err);
+    
+    const statusCode = err.status || err.statusCode || 500;
+    const message = process.env.NODE_ENV === 'production' 
+        ? 'Internal Server Error' 
+        : err.message || 'Internal Server Error';
+
+    res.status(statusCode).json({
+        success: false,
+        error: message,
+        ...(process.env.NODE_ENV !== 'production' && { stack: err.stack })
+    });
+});
 
 export default app;

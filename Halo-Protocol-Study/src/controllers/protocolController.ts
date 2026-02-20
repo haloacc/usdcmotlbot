@@ -94,7 +94,7 @@ router.post('/acp/checkout', async (req: Request, res: Response) => {
         shipping_speed: 'standard',
         currency: session.checkout.currency,
       },
-    });
+    }, req.ip);
 
     session.risk = {
       score: riskResult.risk_score,
@@ -214,7 +214,7 @@ router.patch('/acp/checkout/:id', async (req: Request, res: Response) => {
         shipping_speed: session.fulfillment?.option_id?.includes('express') ? 'express' : 'standard',
         currency: session.checkout.currency,
       },
-    });
+    }, req.ip);
 
     session.risk = {
       ...session.risk,

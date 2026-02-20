@@ -1,12 +1,14 @@
 import request from 'supertest';
 import app from '../../src/app';
 import { createPaymentIntent } from '../../src/services/stripeService';
+import { recentTransactions } from '../../src/services/riskEngine';
 
 jest.mock('../../src/services/stripeService');
 
 describe('Agentic Payment Controller Integration Tests', () => {
   beforeEach(() => {
     (createPaymentIntent as jest.Mock).mockResolvedValue({ id: 'pi_test_123' });
+    recentTransactions.clear();
   });
 
   afterEach(() => {

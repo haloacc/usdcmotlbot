@@ -13,9 +13,9 @@ class PaymentMethodService {
   private stripe: Stripe;
 
   constructor() {
-    const stripeKey = process.env.STRIPE_SECRET_KEY || '';
+    const stripeKey = process.env.STRIPE_SECRET_KEY || 'sk_test_mock';
     this.stripe = new Stripe(stripeKey, {
-      apiVersion: '2020-08-27',
+      apiVersion: '2025-01-27.acacia' as any,
     });
   }
 
